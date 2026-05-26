@@ -1,0 +1,86 @@
+import Link from "next/link";
+import { Briefcase, Building2, GraduationCap, MessageCircle, User, Users } from "lucide-react";
+import type { ReactNode } from "react";
+import { ActiveNavLink } from "@/components/ActiveNavLink";
+import { AppBrowserChrome } from "@/components/AppBrowserChrome";
+import { AppToaster } from "@/components/AppToaster";
+
+const navBaseClass =
+  "flex flex-col items-center justify-center gap-0.5 px-2 py-1 transition-colors rounded-lg min-w-[60px]";
+const navActiveClass = "text-pink-500 bg-pink-50";
+const navInactiveClass = "text-gray-600 hover:text-pink-400 hover:bg-pink-50/50";
+
+const navItems = [
+  { name: "求人", path: "/jobs", icon: Briefcase },
+  { name: "学校", path: "/school", icon: GraduationCap },
+  { name: "課外活動", path: "/activities", icon: Users },
+  { name: "繋がり", path: "/connect", icon: MessageCircle },
+];
+
+export function AppShell({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex flex-col min-h-screen bg-[#FFF9FA] text-gray-800 font-sans">
+      <AppToaster />
+      <AppBrowserChrome />
+
+      <nav className="sticky top-[var(--hugmeid-nav-top,52px)] z-40 bg-white/95 backdrop-blur-md border-b border-pink-100 shadow-sm">
+        <div className="flex items-center justify-center px-4 py-1.5 border-b border-pink-50">
+          <Link href="/" prefetch={false} className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-pink-400 to-pink-500 flex items-center justify-center text-white font-bold text-xs shadow-sm">
+              Hm
+            </div>
+            <div className="flex flex-col">
+              <h1 className="text-base font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-400 tracking-tight leading-tight">
+                Hugmeid
+              </h1>
+              <p className="text-[9px] text-gray-500 tracking-wide font-light whitespace-nowrap">
+                6万人の医学生で創る縁
+              </p>
+            </div>
+          </Link>
+        </div>
+
+        <div className="flex items-center justify-between px-2 py-1">
+          <div className="flex items-center gap-0.5 flex-1 justify-center">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <ActiveNavLink
+                  key={item.name}
+                  href={item.path}
+                  className={navBaseClass}
+                  activeClassName={navActiveClass}
+                  inactiveClassName={navInactiveClass}
+                >
+                  <Icon size={18} />
+                  <span className="text-[10px] font-medium whitespace-nowrap">{item.name}</span>
+                </ActiveNavLink>
+              );
+            })}
+            <ActiveNavLink
+              href="/profile"
+              className={navBaseClass}
+              activeClassName={navActiveClass}
+              inactiveClassName={navInactiveClass}
+            >
+              <User size={18} />
+              <span className="text-[10px] font-medium whitespace-nowrap">マイページ</span>
+            </ActiveNavLink>
+          </div>
+
+          <ActiveNavLink
+            href="/sponsors"
+            className="flex flex-col items-center justify-center gap-0.5 px-2 py-1 transition-colors rounded-lg hover:bg-pink-50 ml-1"
+            activeClassName="text-pink-500 bg-pink-50"
+            inactiveClassName="text-gray-600 hover:text-pink-500"
+          >
+            <Building2 size={18} />
+            <span className="text-[10px] font-medium whitespace-nowrap">スポンサー</span>
+          </ActiveNavLink>
+        </div>
+      </nav>
+
+      <main className="flex-1 overflow-x-hidden pb-16">{children}</main>
+    </div>
+  );
+}
