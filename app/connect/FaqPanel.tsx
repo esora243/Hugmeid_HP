@@ -51,7 +51,7 @@ export function FaqPanel() {
 
       <div className="space-y-3">
         {filteredFaqs.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-sm border border-pink-50 p-6 text-center text-sm text-gray-500">
+          <div className="bg-white rounded-xl shadow-sm border border-orange-50 p-6 text-center text-sm text-gray-500">
             FAQはまだ登録されていません。
           </div>
         ) : (
@@ -71,11 +71,11 @@ export function FaqPanel() {
 
 function FaqItem({ faq, open, onToggle }: { faq: FAQ; open: boolean; onToggle: () => void }) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-pink-50 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-orange-50 overflow-hidden">
       <button
         type="button"
         onClick={onToggle}
-        className="w-full p-4 flex items-start justify-between text-left hover:bg-pink-50/50 transition-colors"
+        className="w-full p-4 flex items-start justify-between text-left hover:bg-orange-50/50 transition-colors"
       >
         <div className="flex-1 pr-3">
           <div className="flex items-center gap-2 mb-2">
@@ -84,7 +84,7 @@ function FaqItem({ faq, open, onToggle }: { faq: FAQ; open: boolean; onToggle: (
             </span>
           </div>
           <div className="flex items-start gap-2">
-            <span className="shrink-0 text-pink-500 font-bold text-sm mt-0.5">Q.</span>
+            <span className="shrink-0 text-orange-500 font-bold text-sm mt-0.5">Q.</span>
             <span className="text-sm font-bold text-gray-800 leading-snug">{faq.question}</span>
           </div>
         </div>
@@ -92,7 +92,7 @@ function FaqItem({ faq, open, onToggle }: { faq: FAQ; open: boolean; onToggle: (
       </button>
       {open ? (
         <div className="px-4 pb-4 pt-0 border-t border-gray-50">
-          <div className="flex items-start gap-2 bg-pink-50/50 p-3 rounded-lg">
+          <div className="flex items-start gap-2 bg-orange-50/50 p-3 rounded-lg">
             <span className="shrink-0 text-blue-500 font-bold text-sm mt-0.5">A.</span>
             <p className="text-sm text-gray-700 leading-relaxed">{faq.answer}</p>
           </div>

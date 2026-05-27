@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
 import { AppShell } from "@/components/AppShell";
+import { AuthProvider } from "@/components/AuthContext";
+import { SavedItemsProvider } from "@/components/SavedItemsContext";
 import { siteConfig } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
@@ -23,9 +25,8 @@ export const metadata: Metadata = {
   },
 };
 
-// Next.js 16 仕様に合わせたテーマカラー（ブランドカラーのオレンジ）の設定
 export const viewport: Viewport = {
-  themeColor: "#F97316",
+  themeColor: "#F97316", // ブランドカラーのオレンジ
   width: "device-width",
   initialScale: 1,
 };
@@ -34,7 +35,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja">
       <body>
-        {/* Google AdSense (kakuninに準拠して全ページ共通で配置) */}
         <Script
           id="google-adsense"
           async
@@ -42,7 +42,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9475852513146230"
           crossOrigin="anonymous"
         />
-        <AppShell>{children}</AppShell>
+        <AuthProvider>
+          <SavedItemsProvider>
+            <AppShell>{children}</AppShell>
+          </SavedItemsProvider>
+        </AuthProvider>
       </body>
     </html>
   );

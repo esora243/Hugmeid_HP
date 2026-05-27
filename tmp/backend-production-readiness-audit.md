@@ -3,16 +3,16 @@
 - Date: 2026-05-10
 - Base branch: `develop`
 - Base commit inspected: `e98d109 Fix LIFF session and profile reliability (#2)`
-- Repo: `Hugmeid/hugmeid-web`
+- Repo: `HugNavi/HugNavi-web`
 
 ## Source of Truth
 
 - Running code and files in this repo are treated as the implementation truth.
 - Design intent was checked against:
-  - `/Users/yuyoshimuta/Documents/dev/Hugmeid/システム設計書/システム設計書.md`
-  - `/Users/yuyoshimuta/Documents/dev/Hugmeid/システム設計書/BG実装設計.md`
-  - `/Users/yuyoshimuta/Documents/dev/Hugmeid/システム設計書/API契約_DTO設計.md`
-  - `/Users/yuyoshimuta/Documents/dev/Hugmeid/システム設計書/Supabase_dev適用状況.md`
+  - `/Users/yuyoshimuta/Documents/dev/HugNavi/システム設計書/システム設計書.md`
+  - `/Users/yuyoshimuta/Documents/dev/HugNavi/システム設計書/BG実装設計.md`
+  - `/Users/yuyoshimuta/Documents/dev/HugNavi/システム設計書/API契約_DTO設計.md`
+  - `/Users/yuyoshimuta/Documents/dev/HugNavi/システム設計書/Supabase_dev適用状況.md`
 
 ## Current Backend Surface
 
@@ -31,7 +31,7 @@ Implemented Route Handlers:
 Implemented server helpers:
 
 - `lib/auth/line.ts`: LINE ID token verification.
-- `lib/auth/session.ts`: signed httpOnly Hugmeid session cookie containing `userId` and expiry only.
+- `lib/auth/session.ts`: signed httpOnly HugNavi session cookie containing `userId` and expiry only.
 - `lib/users.ts`: LINE UID upsert, session user lookup, profile options, and profile update through server-only service-role REST.
 - `lib/jobs.ts`: public active job list/detail DTO mapping through anon REST.
 - `lib/timetable.ts`: public active shared class timetable DTO mapping through anon REST.
@@ -49,7 +49,7 @@ Tests currently present:
 - Session cookie payload is `{ userId, exp }`, not raw LINE identifiers.
 - Session cookies are `httpOnly`, `sameSite: "lax"`, `secure` in production, path `/`, with a max age.
 - `SUPABASE_SERVICE_ROLE_KEY` is only referenced by `lib/supabase/rest.ts` and consumed by server-side user/profile helpers.
-- `HUGMEID_DEV_MOCK_AUTH` is disabled in production by code guard.
+- `HugNavi_DEV_MOCK_AUTH` is disabled in production by code guard.
 - Deactivated users cannot receive a new login session and cannot be fetched/updated through current session profile APIs.
 
 ## Remaining Production-Readiness Gaps

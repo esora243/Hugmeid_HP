@@ -24,13 +24,13 @@ const SchoolWorkspaceClient = dynamic(
             </div>
           </div>
           <div className="flex gap-2 overflow-x-auto hide-scrollbar">
-            <div className="shrink-0 px-4 py-2.5 rounded-xl text-sm font-bold bg-pink-500 text-white shadow-md">時間割</div>
+            <div className="shrink-0 px-4 py-2.5 rounded-xl text-sm font-bold bg-orange-500 text-white shadow-md">時間割</div>
             <div className="shrink-0 px-4 py-2.5 rounded-xl text-sm font-bold bg-gray-50 text-gray-600">シラバス</div>
             <div className="shrink-0 px-4 py-2.5 rounded-xl text-sm font-bold bg-gray-50 text-gray-600">勉強系記事</div>
           </div>
         </div>
         <div className="px-3 pt-4">
-          <div className="bg-white rounded-2xl border border-pink-100 p-8 text-center">
+          <div className="bg-white rounded-2xl border border-orange-100 p-8 text-center">
             <p className="font-bold text-gray-800">学校ページを読み込んでいます</p>
           </div>
         </div>

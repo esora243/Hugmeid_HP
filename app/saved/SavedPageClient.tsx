@@ -51,17 +51,17 @@ export function SavedPageClient() {
 
   return (
     <div className="w-full max-w-lg mx-auto pb-20 animate-fade-in">
-      <div className="sticky top-[110px] z-30 bg-[#FFF9FA]/90 backdrop-blur-md pt-2 pb-3 px-4 border-b border-pink-100">
+      <div className="sticky top-[110px] z-30 bg-[#FFF9FA]/90 backdrop-blur-md pt-2 pb-3 px-4 border-b border-orange-100">
         <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-          <Bookmark className="text-pink-500" /> 保存済み
+          <Bookmark className="text-orange-500" /> 保存済み
         </h2>
       </div>
       <div className="px-4 pt-6 space-y-4">
         {!isLoggedIn ? (
-          <div className="bg-white rounded-2xl border border-pink-100 p-4 text-sm text-gray-600">
+          <div className="bg-white rounded-2xl border border-orange-100 p-4 text-sm text-gray-600">
             <p className="font-bold text-gray-800 mb-1">求人の保存同期にはログインが必要です</p>
             <p className="mb-3">キャンペーン保存はこの端末だけに保存されます。</p>
-            <button onClick={openLoginModal} className="bg-pink-500 text-white font-bold py-2 px-5 rounded-full shadow-sm hover:bg-pink-600 transition-colors">
+            <button onClick={openLoginModal} className="bg-orange-500 text-white font-bold py-2 px-5 rounded-full shadow-sm hover:bg-orange-600 transition-colors">
               ログインする
             </button>
           </div>
@@ -69,14 +69,14 @@ export function SavedPageClient() {
         {!hydrated || syncing ? (
           <div className="text-center text-sm text-gray-500">読み込み中...</div>
         ) : error && resolvedItems.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-pink-100 p-8 text-center">
-            <Bookmark className="mx-auto text-pink-200 mb-3" size={40} />
+          <div className="bg-white rounded-2xl border border-orange-100 p-8 text-center">
+            <Bookmark className="mx-auto text-orange-200 mb-3" size={40} />
             <p className="font-bold text-gray-800 mb-2">保存済み求人を取得できませんでした</p>
             <p className="text-sm text-gray-500">{error}</p>
           </div>
         ) : resolvedItems.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-pink-100 p-8 text-center">
-            <Bookmark className="mx-auto text-pink-200 mb-3" size={40} />
+          <div className="bg-white rounded-2xl border border-orange-100 p-8 text-center">
+            <Bookmark className="mx-auto text-orange-200 mb-3" size={40} />
             <p className="font-bold text-gray-800 mb-2">保存済みアイテムはまだありません</p>
             <p className="text-sm text-gray-500">
               {isLoggedIn ? "求人詳細やキャンペーン詳細から保存すると、ここに一覧表示されます。" : "キャンペーン詳細から保存すると、この端末の保存一覧に表示されます。"}
@@ -85,21 +85,21 @@ export function SavedPageClient() {
         ) : (
           <>
             {error ? (
-              <div className="bg-white rounded-2xl border border-pink-100 p-4 text-sm text-gray-600">
+              <div className="bg-white rounded-2xl border border-orange-100 p-4 text-sm text-gray-600">
                 <p className="font-bold text-gray-800 mb-1">保存済み求人を取得できませんでした</p>
                 <p>{error}</p>
               </div>
             ) : null}
             {resolvedItems.map((item) => (
-              <div key={item.key} className="bg-white rounded-2xl border border-pink-50 p-4 shadow-sm flex items-start gap-3">
-                <div className="w-11 h-11 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center shrink-0">
+              <div key={item.key} className="bg-white rounded-2xl border border-orange-50 p-4 shadow-sm flex items-start gap-3">
+                <div className="w-11 h-11 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
                   {item.type === "job" ? <Briefcase size={20} /> : <Megaphone size={20} />}
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-pink-100 text-pink-600">{item.typeLabel}</span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-orange-100 text-orange-600">{item.typeLabel}</span>
                   </div>
-                  <Link href={item.href} prefetch={false} className="font-bold text-gray-800 hover:text-pink-600 transition-colors block line-clamp-2">
+                  <Link href={item.href} prefetch={false} className="font-bold text-gray-800 hover:text-orange-600 transition-colors block line-clamp-2">
                     {item.title}
                   </Link>
                   <p className="text-sm text-gray-500 mt-1">{item.subtitle}</p>

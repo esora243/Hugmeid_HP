@@ -7,7 +7,7 @@ import type { BookmarkDto } from "@/lib/job-dto";
 import { jobBookmarksToSavedEntries, readCampaignSavedEntries, readLegacyJobSavedEntries } from "@/lib/saved-items";
 import type { SavedEntry, SavedItemType } from "@/lib/types";
 
-const STORAGE_KEY = "hugmeid_saved_items";
+const STORAGE_KEY = "HugNavi_saved_items";
 
 type SavedItemsContextType = {
   savedItems: SavedEntry[];

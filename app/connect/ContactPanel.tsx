@@ -27,10 +27,10 @@ const contactCategories = [
 ] as const;
 
 const fieldClassName =
-  "w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm";
+  "w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm";
 
 function buildMailtoHref(contactEmail: string, formData: ContactFormData) {
-  const subject = encodeURIComponent(`Hugmeid お問い合わせ: ${formData.category}`);
+  const subject = encodeURIComponent(`HugNavi お問い合わせ: ${formData.category}`);
   const body = encodeURIComponent(
     [
       `お名前: ${formData.name}`,
@@ -61,9 +61,9 @@ export function ContactPanel({ contactEmail }: ContactPanelProps) {
 
   return (
     <div className="space-y-4">
-      <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-6 border border-pink-100">
+      <div className="bg-gradient-to-br from-orange-50 to-rose-50 rounded-2xl p-6 border border-orange-100">
         <div className="flex items-center gap-3 mb-3">
-          <div className="w-12 h-12 rounded-xl bg-pink-500 flex items-center justify-center shadow-md">
+          <div className="w-12 h-12 rounded-xl bg-orange-500 flex items-center justify-center shadow-md">
             <MessageCircle className="text-white" size={24} />
           </div>
           <div>
@@ -76,7 +76,7 @@ export function ContactPanel({ contactEmail }: ContactPanelProps) {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-pink-50 p-6 space-y-5">
+      <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-orange-50 p-6 space-y-5">
         <div>
           <label className="text-xs font-bold text-gray-600 mb-2 block">お名前 *</label>
           <input
@@ -123,7 +123,7 @@ export function ContactPanel({ contactEmail }: ContactPanelProps) {
         </div>
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-3.5 rounded-xl shadow-md hover:shadow-lg flex items-center justify-center gap-2 transition-all active:scale-95"
+          className="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white font-bold py-3.5 rounded-xl shadow-md hover:shadow-lg flex items-center justify-center gap-2 transition-all active:scale-95"
         >
           <Send size={18} /> 送信する
         </button>

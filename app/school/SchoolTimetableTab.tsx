@@ -41,16 +41,16 @@ export function SchoolTimetableTab({
       </div>
 
       {!authHydrated || loadingMyTimetable ? (
-        <div className="bg-white rounded-2xl border border-pink-100 p-8 text-center">
-          <Loader2 className="mx-auto text-pink-300 mb-3 animate-spin" size={40} />
+        <div className="bg-white rounded-2xl border border-orange-100 p-8 text-center">
+          <Loader2 className="mx-auto text-orange-300 mb-3 animate-spin" size={40} />
           <p className="font-bold text-gray-800">時間割を読み込んでいます</p>
         </div>
       ) : !isLoggedIn ? (
-        <div className="bg-white rounded-2xl border border-pink-100 p-8 text-center">
-          <Calendar className="mx-auto text-pink-200 mb-3" size={40} />
+        <div className="bg-white rounded-2xl border border-orange-100 p-8 text-center">
+          <Calendar className="mx-auto text-orange-200 mb-3" size={40} />
           <p className="font-bold text-gray-800 mb-2">マイ時間割にはログインが必要です</p>
           <p className="text-sm text-gray-500 mb-4">シラバスから授業を探すことはできます。</p>
-          <button onClick={onLogin} className="bg-pink-500 text-white font-bold py-2 px-5 rounded-full shadow-sm hover:bg-pink-600 transition-colors">ログインする</button>
+          <button onClick={onLogin} className="bg-orange-500 text-white font-bold py-2 px-5 rounded-full shadow-sm hover:bg-orange-600 transition-colors">ログインする</button>
         </div>
       ) : myTimetableError ? (
         <div className="bg-white rounded-2xl border border-red-100 p-8 text-center">
@@ -97,11 +97,11 @@ export function SchoolTimetableTab({
           ))}
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-pink-100 p-8 text-center">
-          <Calendar className="mx-auto text-pink-200 mb-3" size={40} />
+        <div className="bg-white rounded-2xl border border-orange-100 p-8 text-center">
+          <Calendar className="mx-auto text-orange-200 mb-3" size={40} />
           <p className="font-bold text-gray-800 mb-2">マイ時間割はまだ空です</p>
           <p className="text-sm text-gray-500 mb-4">シラバスから授業を追加するとここに表示されます。</p>
-          <button onClick={onOpenSyllabus} className="bg-pink-500 text-white font-bold py-2 px-5 rounded-full shadow-sm hover:bg-pink-600 transition-colors">授業を探す</button>
+          <button onClick={onOpenSyllabus} className="bg-orange-500 text-white font-bold py-2 px-5 rounded-full shadow-sm hover:bg-orange-600 transition-colors">授業を探す</button>
         </div>
       )}
     </div>

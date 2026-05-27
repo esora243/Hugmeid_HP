@@ -102,11 +102,11 @@ export function ProfileEditPageClient() {
     return (
       <div className="min-h-screen bg-[#FFF9FA] pb-20">
         <div className="w-full max-w-lg mx-auto px-4 py-10">
-          <button onClick={() => router.push("/profile")} className="mb-6 text-gray-600 hover:text-pink-500"><ArrowLeft size={24} /></button>
-          <div className="bg-white rounded-2xl border border-pink-100 p-8 text-center shadow-sm">
+          <button onClick={() => router.push("/profile")} className="mb-6 text-gray-600 hover:text-orange-500"><ArrowLeft size={24} /></button>
+          <div className="bg-white rounded-2xl border border-orange-100 p-8 text-center shadow-sm">
             <h1 className="text-lg font-bold text-gray-800 mb-2">プロフィール編集</h1>
             <p className="text-sm text-gray-500 mb-6">プロフィールを編集するにはログインが必要です。</p>
-            <button onClick={openLoginModal} className="w-full rounded-xl bg-pink-500 px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-pink-600">
+            <button onClick={openLoginModal} className="w-full rounded-xl bg-orange-500 px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-orange-600">
               LINEでログインする
             </button>
           </div>
@@ -119,14 +119,14 @@ export function ProfileEditPageClient() {
     return (
       <div className="min-h-screen bg-[#FFF9FA] pb-20">
         <div className="w-full max-w-lg mx-auto px-4 py-10">
-          <button onClick={() => router.push("/profile")} className="mb-6 text-gray-600 hover:text-pink-500"><ArrowLeft size={24} /></button>
-          <div className="bg-white rounded-2xl border border-pink-100 p-8 text-center shadow-sm">
+          <button onClick={() => router.push("/profile")} className="mb-6 text-gray-600 hover:text-orange-500"><ArrowLeft size={24} /></button>
+          <div className="bg-white rounded-2xl border border-orange-100 p-8 text-center shadow-sm">
             <h1 className="text-lg font-bold text-gray-800 mb-2">プロフィール編集</h1>
             <p className="text-sm text-gray-500 mb-6">
               {optionsLoading ? "プロフィール選択肢を読み込んでいます。" : optionsError ?? "プロフィール選択肢を読み込めませんでした。"}
             </p>
             {!optionsLoading ? (
-              <button onClick={() => void loadOptions()} className="w-full rounded-xl bg-pink-500 px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-pink-600">
+              <button onClick={() => void loadOptions()} className="w-full rounded-xl bg-orange-500 px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-orange-600">
                 再読み込み
               </button>
             ) : null}
@@ -139,49 +139,49 @@ export function ProfileEditPageClient() {
   return (
     <div className="min-h-screen bg-[#FFF9FA] pb-20">
       <div className="w-full max-w-lg mx-auto">
-        <div className="sticky top-[110px] z-30 bg-white border-b border-pink-100 px-4 py-4 flex items-center gap-3 shadow-sm">
-          <button onClick={() => router.push("/profile")} className="text-gray-600 hover:text-pink-500"><ArrowLeft size={24} /></button>
+        <div className="sticky top-[110px] z-30 bg-white border-b border-orange-100 px-4 py-4 flex items-center gap-3 shadow-sm">
+          <button onClick={() => router.push("/profile")} className="text-gray-600 hover:text-orange-500"><ArrowLeft size={24} /></button>
           <h1 className="text-lg font-bold text-gray-800 flex-1">プロフィール編集</h1>
-          <button onClick={handleSave} disabled={saving || !profile.universityId || !profile.graduationYear} className="flex items-center gap-1.5 bg-pink-500 disabled:bg-gray-300 text-white px-4 py-2 rounded-full text-sm font-bold shadow-sm hover:bg-pink-600 active:scale-95 transition-all"><Save size={16} /> {saving ? "保存中" : "保存"}</button>
+          <button onClick={handleSave} disabled={saving || !profile.universityId || !profile.graduationYear} className="flex items-center gap-1.5 bg-orange-500 disabled:bg-gray-300 text-white px-4 py-2 rounded-full text-sm font-bold shadow-sm hover:bg-orange-600 active:scale-95 transition-all"><Save size={16} /> {saving ? "保存中" : "保存"}</button>
         </div>
         <div className="p-4 space-y-6 animate-fade-in">
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-pink-50">
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-orange-50">
             <label className="text-xs font-bold text-gray-500 mb-3 block">性別</label>
             <div className="grid grid-cols-2 gap-2">
               {options.genders.map((opt) => (
-                <button key={opt} onClick={() => setProfile((prev) => ({ ...prev, gender: opt }))} className={`py-2.5 px-3 rounded-lg text-sm font-medium transition-all ${profile.gender === opt ? "bg-pink-500 text-white shadow-md" : "bg-gray-50 text-gray-700 hover:bg-pink-50 border border-gray-100"}`}>{opt}</button>
+                <button key={opt} onClick={() => setProfile((prev) => ({ ...prev, gender: opt }))} className={`py-2.5 px-3 rounded-lg text-sm font-medium transition-all ${profile.gender === opt ? "bg-orange-500 text-white shadow-md" : "bg-gray-50 text-gray-700 hover:bg-orange-50 border border-gray-100"}`}>{opt}</button>
               ))}
             </div>
           </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-pink-50">
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-orange-50">
             <label className="text-xs font-bold text-gray-500 mb-3 block">卒業年度</label>
             <div className="grid grid-cols-2 gap-2">
               {options.graduationYears.map((year) => (
-                <button key={year} onClick={() => setProfile((prev) => ({ ...prev, graduationYear: year }))} className={`py-2.5 px-3 rounded-lg text-sm font-medium transition-all ${profile.graduationYear === year ? "bg-pink-500 text-white shadow-md" : "bg-gray-50 text-gray-700 hover:bg-pink-50 border border-gray-100"}`}>{year}年卒</button>
+                <button key={year} onClick={() => setProfile((prev) => ({ ...prev, graduationYear: year }))} className={`py-2.5 px-3 rounded-lg text-sm font-medium transition-all ${profile.graduationYear === year ? "bg-orange-500 text-white shadow-md" : "bg-gray-50 text-gray-700 hover:bg-orange-50 border border-gray-100"}`}>{year}年卒</button>
               ))}
             </div>
           </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-pink-50">
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-orange-50">
             <label className="text-xs font-bold text-gray-500 mb-3 block">大学名</label>
             <div className="grid grid-cols-1 gap-2">
               {options.universities.map((university) => (
-                <button key={university.id} onClick={() => setProfile((prev) => ({ ...prev, universityId: university.id }))} className={`py-2.5 px-3 rounded-lg text-sm font-medium text-left transition-all ${profile.universityId === university.id ? "bg-pink-500 text-white shadow-md" : "bg-gray-50 text-gray-700 hover:bg-pink-50 border border-gray-100"}`}>{university.name}</button>
+                <button key={university.id} onClick={() => setProfile((prev) => ({ ...prev, universityId: university.id }))} className={`py-2.5 px-3 rounded-lg text-sm font-medium text-left transition-all ${profile.universityId === university.id ? "bg-orange-500 text-white shadow-md" : "bg-gray-50 text-gray-700 hover:bg-orange-50 border border-gray-100"}`}>{university.name}</button>
               ))}
             </div>
           </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-pink-50">
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-orange-50">
             <label className="text-xs font-bold text-gray-500 mb-3 block">部活・サークル（任意）</label>
             <div className="grid grid-cols-2 gap-2">
               {options.clubs.map((club) => (
-                <button key={club.id} onClick={() => setProfile((prev) => ({ ...prev, clubIds: prev.clubIds.includes(club.id) ? [] : [club.id] }))} className={`py-2.5 px-3 rounded-lg text-sm font-medium transition-all ${profile.clubIds.includes(club.id) ? "bg-pink-500 text-white shadow-md" : "bg-gray-50 text-gray-700 hover:bg-pink-50 border border-gray-100"}`}>{club.name}</button>
+                <button key={club.id} onClick={() => setProfile((prev) => ({ ...prev, clubIds: prev.clubIds.includes(club.id) ? [] : [club.id] }))} className={`py-2.5 px-3 rounded-lg text-sm font-medium transition-all ${profile.clubIds.includes(club.id) ? "bg-orange-500 text-white shadow-md" : "bg-gray-50 text-gray-700 hover:bg-orange-50 border border-gray-100"}`}>{club.name}</button>
               ))}
             </div>
           </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-pink-50">
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-orange-50">
             <label className="text-xs font-bold text-gray-500 mb-3 block">希望診療科（任意）</label>
             <div className="grid grid-cols-2 gap-2">
               {options.specialties.map((specialty) => (
-                <button key={specialty.id} onClick={() => setProfile((prev) => ({ ...prev, desiredSpecialtyId: specialty.id }))} className={`py-2.5 px-3 rounded-lg text-sm font-medium transition-all ${profile.desiredSpecialtyId === specialty.id ? "bg-pink-500 text-white shadow-md" : "bg-gray-50 text-gray-700 hover:bg-pink-50 border border-gray-100"}`}>{specialty.name}</button>
+                <button key={specialty.id} onClick={() => setProfile((prev) => ({ ...prev, desiredSpecialtyId: specialty.id }))} className={`py-2.5 px-3 rounded-lg text-sm font-medium transition-all ${profile.desiredSpecialtyId === specialty.id ? "bg-orange-500 text-white shadow-md" : "bg-gray-50 text-gray-700 hover:bg-orange-50 border border-gray-100"}`}>{specialty.name}</button>
               ))}
             </div>
           </div>

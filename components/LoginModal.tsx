@@ -35,7 +35,8 @@ export function LoginModal({ isOpen, onClose, onLogin, error }: LoginModalProps)
           >
             <X size={20} />
           </button>
-          <div className="w-12 h-12 bg-pink-100 text-pink-500 rounded-full mx-auto flex items-center justify-center mb-3">
+          {/* 丸いアイコンの背景と文字色をオレンジに変更 */}
+          <div className="w-12 h-12 bg-orange-100 text-orange-500 rounded-full mx-auto flex items-center justify-center mb-3">
             <span className="font-bold text-xl">H</span>
           </div>
           <h2 className="text-xl font-bold text-gray-800">ログインが必要です</h2>
@@ -44,7 +45,8 @@ export function LoginModal({ isOpen, onClose, onLogin, error }: LoginModalProps)
           </p>
         </div>
 
-        <div className="p-6 bg-pink-50/50">
+        {/* 下部の背景色をオレンジに変更 */}
+        <div className="p-6 bg-orange-50/50">
           <button
             onClick={handleLogin}
             disabled={submitting}

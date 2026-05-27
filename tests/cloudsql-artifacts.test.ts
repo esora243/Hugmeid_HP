@@ -35,8 +35,8 @@ test("Cloud SQL schema covers app-owned runtime tables without external policy d
   }
 
   assert.match(sql, /create extension if not exists pgcrypto/);
-  assert.match(sql, /from pg_roles where rolname = 'hugmeid_app'/);
-  assert.match(sql, /create role hugmeid_app login/);
+  assert.match(sql, /from pg_roles where rolname = 'HugNavi_app'/);
+  assert.match(sql, /create role HugNavi_app login/);
   assert.match(sql, /create type line_friend_status/);
   assert.match(sql, /create type syllabus_source_type/);
   assert.match(sql, /external_auth_uid uuid unique/);
@@ -51,7 +51,7 @@ test("Cloud SQL schema covers app-owned runtime tables without external policy d
   assert.match(sql, /unique \(user_id, content_type, job_id\)/);
   assert.match(sql, /unique \(user_id, syllabus_class_entry_id\)/);
   assert.ok(
-    sql.indexOf("create role hugmeid_app login") < sql.indexOf("grant usage on schema public to hugmeid_app"),
+    sql.indexOf("create role HugNavi_app login") < sql.indexOf("grant usage on schema public to HugNavi_app"),
     "runtime role must exist before grants are applied",
   );
   assert.doesNotMatch(sql, /auth\.uid\(\)/);
@@ -59,12 +59,12 @@ test("Cloud SQL schema covers app-owned runtime tables without external policy d
   assert.doesNotMatch(sql, /grant execute/i);
   assert.doesNotMatch(sql, /grant select, insert, update, delete on all tables/i);
   assert.doesNotMatch(sql, /alter default privileges in schema public grant select, insert, update, delete on tables/i);
-  assert.match(sql, /revoke all privileges on all tables in schema public from hugmeid_app/);
-  assert.match(sql, /revoke all privileges on all sequences in schema public from hugmeid_app/);
-  assert.match(sql, /alter default privileges in schema public revoke all privileges on tables from hugmeid_app/);
-  assert.match(sql, /grant select, insert, update, delete on rate_limit_buckets to hugmeid_app/);
-  assert.match(sql, /grant select, insert, update on users to hugmeid_app/);
-  assert.match(sql, /grant select, insert, delete on user_club_memberships, user_desired_specialties, bookmarks to hugmeid_app/);
+  assert.match(sql, /revoke all privileges on all tables in schema public from HugNavi_app/);
+  assert.match(sql, /revoke all privileges on all sequences in schema public from HugNavi_app/);
+  assert.match(sql, /alter default privileges in schema public revoke all privileges on tables from HugNavi_app/);
+  assert.match(sql, /grant select, insert, update, delete on rate_limit_buckets to HugNavi_app/);
+  assert.match(sql, /grant select, insert, update on users to HugNavi_app/);
+  assert.match(sql, /grant select, insert, delete on user_club_memberships, user_desired_specialties, bookmarks to HugNavi_app/);
 });
 
 test("Cloud SQL security hardening has an idempotent forward migration for existing databases", () => {
@@ -82,12 +82,12 @@ test("Cloud SQL security hardening has an idempotent forward migration for exist
   assert.match(sql, /tgname = 'app_environment_updated_at'/);
   assert.match(sql, /jobs_apply_url_https_check/);
   assert.match(sql, /syllabus_class_resources_url_https_check/);
-  assert.match(sql, /revoke all privileges on all tables in schema public from hugmeid_app/);
-  assert.match(sql, /alter default privileges in schema public revoke all privileges on tables from hugmeid_app/);
-  assert.match(sql, /grant select, insert, update, delete on rate_limit_buckets to hugmeid_app/);
+  assert.match(sql, /revoke all privileges on all tables in schema public from HugNavi_app/);
+  assert.match(sql, /alter default privileges in schema public revoke all privileges on tables from HugNavi_app/);
+  assert.match(sql, /grant select, insert, update, delete on rate_limit_buckets to HugNavi_app/);
   assert.doesNotMatch(sql, /grant select, insert, update, delete on all tables/i);
   assert.doesNotMatch(sql, /alter default privileges in schema public grant select, insert, update, delete on tables/i);
-  assert.match(sql, /grant select, insert, update on users to hugmeid_app/);
+  assert.match(sql, /grant select, insert, update on users to HugNavi_app/);
 });
 
 test("Cloud SQL lookup seed provides required selectable profile and job values", () => {

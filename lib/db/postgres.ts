@@ -15,8 +15,8 @@ types.setTypeParser(1184, (value) => value);
 export { DatabaseConfigError } from "./environment";
 
 const globalForPostgres = globalThis as typeof globalThis & {
-  hugmeidPostgresPool?: Pool;
-  hugmeidDatabaseEnvironmentCheck?: Promise<void>;
+  HugNaviPostgresPool?: Pool;
+  HugNaviDatabaseEnvironmentCheck?: Promise<void>;
 };
 
 function getDatabaseConfig(): PoolConfig {
@@ -40,15 +40,15 @@ function getDatabaseConfig(): PoolConfig {
 }
 
 function getPool() {
-  if (!globalForPostgres.hugmeidPostgresPool) {
-    globalForPostgres.hugmeidPostgresPool = new Pool({
+  if (!globalForPostgres.HugNaviPostgresPool) {
+    globalForPostgres.HugNaviPostgresPool = new Pool({
       ...getDatabaseConfig(),
       max: Number(process.env.PGPOOL_MAX ?? 5),
       idleTimeoutMillis: 30_000,
       connectionTimeoutMillis: 10_000,
     });
   }
-  return globalForPostgres.hugmeidPostgresPool;
+  return globalForPostgres.HugNaviPostgresPool;
 }
 
 export function getDatabaseRuntimeEnvironment(): DatabaseRuntimeEnvironment {
@@ -63,8 +63,8 @@ async function assertDatabaseEnvironmentSentinel() {
   const runtimeEnvironment = resolveDatabaseRuntimeEnvironment();
   if (runtimeEnvironment.deployEnv === "local") return;
 
-  if (!globalForPostgres.hugmeidDatabaseEnvironmentCheck) {
-    globalForPostgres.hugmeidDatabaseEnvironmentCheck = (async () => {
+  if (!globalForPostgres.HugNaviDatabaseEnvironmentCheck) {
+    globalForPostgres.HugNaviDatabaseEnvironmentCheck = (async () => {
       const { rows } = await getPool().query<{ value: string }>(
         "select value from app_environment where key = 'database_environment' limit 1",
       );
@@ -77,12 +77,12 @@ async function assertDatabaseEnvironmentSentinel() {
         });
       }
     })().catch((error) => {
-      globalForPostgres.hugmeidDatabaseEnvironmentCheck = undefined;
+      globalForPostgres.HugNaviDatabaseEnvironmentCheck = undefined;
       throw error;
     });
   }
 
-  return globalForPostgres.hugmeidDatabaseEnvironmentCheck;
+  return globalForPostgres.HugNaviDatabaseEnvironmentCheck;
 }
 
 type DbQueryResult<T> = Omit<QueryResult, "rows"> & { rows: T[] };

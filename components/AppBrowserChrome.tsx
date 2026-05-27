@@ -6,10 +6,10 @@ type LiffChromeState = {
   isInClient: boolean;
 };
 
-// 黒枠UIを削除したため、ブラウザ起動時も余分なオフセット(黒枠分の高さ)を 0px に設定します
+// 黒枠UIを削除したため、ブラウザ起動時の余分なオフセット(黒枠分の高さ)を 0px に設定
 const chromeOffsets = {
   liff: { navTop: "0px", browserBottom: "0px" },
-  browser: { navTop: "0px", browserBottom: "0px" }, 
+  browser: { navTop: "0px", browserBottom: "0px" },
 } as const;
 
 function hasLiffSignal() {
@@ -21,8 +21,8 @@ function hasLiffSignal() {
 
 function setBrowserChromeOffsets(isInClient: boolean) {
   const offsets = isInClient ? chromeOffsets.liff : chromeOffsets.browser;
-  document.documentElement.style.setProperty("--hugmeid-nav-top", offsets.navTop);
-  document.documentElement.style.setProperty("--hugmeid-browser-bottom", offsets.browserBottom);
+  document.documentElement.style.setProperty("--HugNavi-nav-top", offsets.navTop);
+  document.documentElement.style.setProperty("--HugNavi-browser-bottom", offsets.browserBottom);
 }
 
 export function AppBrowserChrome() {
@@ -54,6 +54,6 @@ export function AppBrowserChrome() {
     };
   }, []);
 
-  // ご要望通り、ヘッダーおよびフッターの黒枠（疑似ブラウザUI）は描画せず完全に削除します
+  // ヘッダーおよびフッターの黒枠（疑似ブラウザUI）は描画せず完全に削除します
   return null;
 }

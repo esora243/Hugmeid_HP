@@ -46,16 +46,16 @@ export function SchoolClassDetailView({
         </div>
 
         <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
-          <h3 className="font-bold text-gray-800 mb-2 flex items-center gap-2"><BookOpen size={18} className="text-pink-400" /> この授業で次に接続するもの</h3>
+          <h3 className="font-bold text-gray-800 mb-2 flex items-center gap-2"><BookOpen size={18} className="text-orange-400" /> この授業で次に接続するもの</h3>
           <p className="text-sm text-gray-500 leading-relaxed">Zoom URL、課題、個人メモ、タグは次のバックエンドAPI接続で扱います。</p>
           <div className="mt-4">
             {!isLoggedIn ? (
-              <button onClick={onLogin} className="w-full py-2.5 rounded-xl bg-pink-500 text-white text-sm font-bold">ログインして時間割に追加</button>
+              <button onClick={onLogin} className="w-full py-2.5 rounded-xl bg-orange-500 text-white text-sm font-bold">ログインして時間割に追加</button>
             ) : (
               <button
                 onClick={onToggleClass}
                 disabled={isMutating}
-                className={`w-full py-2.5 rounded-xl text-sm font-bold disabled:opacity-60 ${isSelectedInMyTimetable ? "bg-gray-100 text-gray-700" : "bg-pink-500 text-white"}`}
+                className={`w-full py-2.5 rounded-xl text-sm font-bold disabled:opacity-60 ${isSelectedInMyTimetable ? "bg-gray-100 text-gray-700" : "bg-orange-500 text-white"}`}
               >
                 {isMutating ? "更新中..." : isSelectedInMyTimetable ? "マイ時間割から削除" : "マイ時間割に追加"}
               </button>

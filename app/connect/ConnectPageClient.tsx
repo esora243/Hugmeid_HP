@@ -20,7 +20,7 @@ export function ConnectPageClient({ contactEmail }: ConnectPageClientProps) {
 
   return (
     <div className="w-full max-w-lg mx-auto pb-8 animate-slide-in-right">
-      <div className="sticky top-[20px] z-30 bg-white border-b border-pink-100 px-4 py-4">
+      <div className="sticky top-[20px] z-30 bg-white border-b border-orange-100 px-4 py-4">
         <h2 className="text-xl font-bold text-gray-800 mb-4">繋がり</h2>
         <div className="flex gap-2">
           {tabs.map((tab) => (
@@ -48,7 +48,7 @@ function TabButton({ active, label, onClick }: { active: boolean; label: string;
       aria-pressed={active}
       onClick={onClick}
       className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-all ${
-        active ? "bg-pink-500 text-white shadow-md" : "bg-gray-50 text-gray-600 hover:bg-pink-50"
+        active ? "bg-orange-500 text-white shadow-md" : "bg-gray-50 text-gray-600 hover:bg-orange-50"
       }`}
     >
       {label}
