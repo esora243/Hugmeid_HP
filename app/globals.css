@@ -7,8 +7,15 @@
 :root {
   --background: #FFF9FA;
   --foreground: #1f2937;
-  --hugmeid-nav-top: 52px;
-  --hugmeid-browser-bottom: 64px;
+
+  --brand-primary: #f97316;
+  --brand-primary-light: #fb923c;
+  --brand-accent: #fb7185;
+
+  --info-blue: #3b82f6;
+  --surface-warm: #fffcfc;
+
+  --pb-safe: env(safe-area-inset-bottom, 0px);
 }
 
 body {
@@ -24,4 +31,8 @@ body {
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.pb-safe {
+  padding-bottom: var(--pb-safe);
 }
