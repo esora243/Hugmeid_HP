@@ -70,7 +70,7 @@ export function JobDetailPageClient({ initialJob, initialLoadError }: JobDetailP
   if (!job || loadError) {
     return (
       <div className="w-full max-w-lg mx-auto bg-white min-h-screen animate-slide-in-right p-6 flex flex-col items-center justify-center text-center">
-        <Briefcase className="text-orange-200 mb-4" size={44} />
+77        <Briefcase className="text-orange-200 mb-4" size={44} />
         <h2 className="text-xl font-bold text-gray-800 mb-2">求人が見つかりません</h2>
         <p className="text-sm text-gray-500 mb-6">{loadError ?? "この求人は削除されたか、まだ登録されていません。"}</p>
         <Link href="/jobs" prefetch={false} className="bg-orange-500 text-white font-bold py-3 px-6 rounded-full hover:bg-orange-600 transition-colors">
@@ -95,7 +95,7 @@ export function JobDetailPageClient({ initialJob, initialLoadError }: JobDetailP
         </button>
       </header>
 
-      <div className="p-4 space-y-6 pb-[calc(7rem+var(--HugNavi-browser-bottom))]">
+      <div className="p-4 space-y-6 pb-[calc(7rem+var(--hugmeid-browser-bottom))]">
         <div>
           <div className="flex gap-2 mb-3 flex-wrap">
             <span className="text-[10px] font-bold px-2 py-0.5 bg-orange-100 text-orange-600 rounded">{job.category.name}</span>
@@ -169,7 +169,7 @@ export function JobDetailPageClient({ initialJob, initialLoadError }: JobDetailP
         </div>
       </div>
 
-      <div className="fixed bottom-[var(--HugNavi-browser-bottom)] left-0 right-0 bg-white border-t border-orange-100 p-3 pb-safe z-40 shadow-[0_-10px_20px_rgba(0,0,0,0.03)]">
+      <div className="fixed bottom-[var(--hugmeid-browser-bottom)] left-0 right-0 bg-white border-t border-orange-100 p-3 pb-safe z-40 shadow-[0_-10px_20px_rgba(0,0,0,0.03)]">
         <div className="max-w-lg mx-auto flex gap-3">
           <SaveButton saved={isSaved("job", job.id)} onClick={() => void handleSave()} />
           <button

@@ -92,7 +92,7 @@ export function CampaignDetailPageClient({ campaignId }: CampaignDetailPageClien
         ) : null}
         <div className="absolute top-4 left-4 bg-orange-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-sm">{campaign.tag}</div>
       </div>
-      <div className="p-4 space-y-6 pb-[calc(7rem+var(--HugNavi-browser-bottom))]">
+      <div className="p-4 space-y-6 pb-[calc(7rem+var(--hugmeid-browser-bottom))]">
         <div>
           <h2 className="text-xl font-bold text-gray-800 leading-snug mb-3">{campaign.title}</h2>
           <div className="flex items-center gap-2 text-sm text-gray-500 border-b border-gray-100 pb-4">
@@ -124,7 +124,7 @@ export function CampaignDetailPageClient({ campaignId }: CampaignDetailPageClien
           </div>
         </div>
       </div>
-      <div className="fixed bottom-[var(--HugNavi-browser-bottom)] left-0 right-0 bg-white border-t border-orange-100 p-3 z-40 shadow-[0_-10px_20px_rgba(0,0,0,0.03)]">
+      <div className="fixed bottom-[var(--hugmeid-browser-bottom)] left-0 right-0 bg-white border-t border-orange-100 p-3 z-40 shadow-[0_-10px_20px_rgba(0,0,0,0.03)]">
         <div className="max-w-lg mx-auto flex gap-3">
           <SaveButton saved={isSaved("campaign", campaign.id)} onClick={() => void handleSave()} />
           <button onClick={handleApply} className="flex-1 bg-gradient-to-r from-orange-500 to-rose-400 hover:from-orange-600 hover:to-rose-500 text-white font-bold rounded-xl flex justify-center items-center gap-2 shadow-sm hover:shadow-md transition-all active:scale-[0.98] py-3">エントリーする</button>

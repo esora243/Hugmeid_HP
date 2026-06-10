@@ -5,20 +5,10 @@
 @tailwind utilities;
 
 :root {
-  /* 全体背景：オレンジがかった淡いピンク */
   --background: #FFF9FA;
   --foreground: #1f2937;
-
-  /* ブランドカラー：オレンジ系 */
-  --brand-primary: #f97316;       
-  --brand-primary-light: #fb923c; 
-  --brand-accent: #fb7185;        
-
-  --info-blue: #3b82f6;
-  --surface-warm: #fffcfc;
-
-  /* セーフエリア（モバイル用 ボトムナビ） */
-  --pb-safe: env(safe-area-inset-bottom, 0px);
+  --hugmeid-nav-top: 52px;
+  --hugmeid-browser-bottom: 64px;
 }
 
 body {
@@ -27,16 +17,11 @@ body {
   font-family: 'Noto Sans JP', 'Inter', sans-serif;
 }
 
-/* スクロールバー非表示ユーティリティ */
+/* Hide scrollbar */
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-
-/* iPhone セーフエリア対応 */
-.pb-safe {
-  padding-bottom: var(--pb-safe);
 }

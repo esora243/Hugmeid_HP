@@ -61,8 +61,8 @@ test(".env.example covers production runtime environment variables without secre
     "NEXT_PUBLIC_APP_DESCRIPTION",
     "NEXT_PUBLIC_SITE_URL",
     "IMAGE_ALLOWED_REMOTE_HOSTS",
-    "HugNavi_DEPLOY_ENV",
-    "HugNavi_DATABASE_ENV",
+    "HUGMEID_DEPLOY_ENV",
+    "HUGMEID_DATABASE_ENV",
     "CLOUD_SQL_CONNECTION_NAME",
     "PGHOST",
     "PGPORT",
@@ -89,8 +89,8 @@ test(".env.example covers production runtime environment variables without secre
 
 test("production artifacts do not keep a mock authentication path", () => {
   const forbidden = [
-    "HugNavi_DEV_MOCK_AUTH",
-    "__HugNavi_DEV_MOCK_ID_TOKEN__",
+    "HUGMEID_DEV_MOCK_AUTH",
+    "__HUGMEID_DEV_MOCK_ID_TOKEN__",
     "dev-line-uid",
     "allowDevMock",
     "canUseDevMockAuth",
@@ -98,7 +98,7 @@ test("production artifacts do not keep a mock authentication path", () => {
 
   for (const file of readProjectTextFiles(process.cwd())) {
     for (const marker of forbidden) {
-      if (file.path.endsWith("tests/production-readiness-artifacts.test.ts")) continue;
+      if (file.path.endsWith("production-readiness-artifacts.test.ts")) continue;
       assert.doesNotMatch(file.text, new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${marker} remained in ${file.path}`);
     }
   }
@@ -198,15 +198,15 @@ test("visible controls do not keep no-op placeholder buttons", () => {
 });
 
 test("detail CTAs stay above the non-LIFF browser chrome", () => {
-  assert.match(globalsCss(), /--HugNavi-nav-top:\s*52px/);
-  assert.match(globalsCss(), /--HugNavi-browser-bottom:\s*64px/);
+  assert.match(globalsCss(), /--hugmeid-nav-top:\s*52px/);
+  assert.match(globalsCss(), /--hugmeid-browser-bottom:\s*64px/);
   assert.match(appBrowserChrome(), /const chromeOffsets =/);
-  assert.match(appBrowserChrome(), /"--HugNavi-browser-bottom"/);
+  assert.match(appBrowserChrome(), /"--hugmeid-browser-bottom"/);
 
   for (const source of [jobDetail(), campaignDetail()]) {
-    assert.match(source, /pb-\[calc\(7rem\+var\(--HugNavi-browser-bottom\)\)\]/);
-    assert.match(source, /bottom-\[var\(--HugNavi-browser-bottom\)\]/);
-    assert.doesNotMatch(source, /HugNavi-browser-bottom,64px/);
+    assert.match(source, /pb-\[calc\(7rem\+var\(--hugmeid-browser-bottom\)\)\]/);
+    assert.match(source, /bottom-\[var\(--hugmeid-browser-bottom\)\]/);
+    assert.doesNotMatch(source, /hugmeid-browser-bottom,64px/);
   }
 });
 
@@ -246,7 +246,7 @@ test("production deployment checklist documents release gates and boundary requi
     "any future failure as a production deployment blocker",
     "cloudsql/migrations/",
     "cloudsql/seeds/",
-    "LIFF ID token -> /api/auth/line/session -> HugNavi session cookie",
+    "LIFF ID token -> /api/auth/line/session -> Hugmeid session cookie",
     "Do not expose raw `line_uid`",
     "database passwords out of browser code",
     "app_environment",
@@ -254,8 +254,8 @@ test("production deployment checklist documents release gates and boundary requi
     "develop -> staging",
     "main -> production",
     "separate LINE Login channels/LIFF apps",
-    "HugNavi-web-staging",
-    "HugNavi-web-production",
+    "hugmeid-web-staging",
+    "hugmeid-web-production",
   ]) {
     assert.match(checklist, new RegExp(required.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
   }

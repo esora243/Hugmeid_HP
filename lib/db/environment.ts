@@ -1,6 +1,6 @@
-const HugNavi_RUNTIME_ENVIRONMENTS = ["local", "staging", "production"] as const;
+const HUGMEID_RUNTIME_ENVIRONMENTS = ["local", "staging", "production"] as const;
 
-type HugNaviRuntimeEnvironment = (typeof HugNavi_RUNTIME_ENVIRONMENTS)[number];
+type HugmeidRuntimeEnvironment = (typeof HUGMEID_RUNTIME_ENVIRONMENTS)[number];
 
 export type DatabaseConfigErrorCode =
   | "deploy_env_required"
@@ -10,9 +10,9 @@ export type DatabaseConfigErrorCode =
   | "database_env_mismatch"
   | "database_config_missing";
 
-export type SanitizedRuntimeEnvironment = HugNaviRuntimeEnvironment | "missing" | "invalid";
+export type SanitizedRuntimeEnvironment = HugmeidRuntimeEnvironment | "missing" | "invalid";
 
-const VALID_RUNTIME_ENVIRONMENTS = new Set<string>(HugNavi_RUNTIME_ENVIRONMENTS);
+const VALID_RUNTIME_ENVIRONMENTS = new Set<string>(HUGMEID_RUNTIME_ENVIRONMENTS);
 
 export class DatabaseConfigError extends Error {
   readonly code: DatabaseConfigErrorCode;
@@ -40,28 +40,28 @@ export class DatabaseConfigError extends Error {
 }
 
 export type DatabaseRuntimeEnvironment = {
-  deployEnv: HugNaviRuntimeEnvironment;
-  databaseEnv: HugNaviRuntimeEnvironment;
+  deployEnv: HugmeidRuntimeEnvironment;
+  databaseEnv: HugmeidRuntimeEnvironment;
 };
 
 type RuntimeEnvironmentRead =
   | { status: "missing" }
   | { status: "invalid" }
-  | { status: "valid"; value: HugNaviRuntimeEnvironment };
+  | { status: "valid"; value: HugmeidRuntimeEnvironment };
 
 function cleanEnvValue(value: string | undefined) {
   const trimmed = value?.trim();
   return trimmed ? trimmed : undefined;
 }
 
-function isHugNaviRuntimeEnvironment(value: string): value is HugNaviRuntimeEnvironment {
+function isHugmeidRuntimeEnvironment(value: string): value is HugmeidRuntimeEnvironment {
   return VALID_RUNTIME_ENVIRONMENTS.has(value);
 }
 
 function readRuntimeEnvironment(value: string | undefined): RuntimeEnvironmentRead {
   const cleaned = cleanEnvValue(value);
   if (!cleaned) return { status: "missing" };
-  return isHugNaviRuntimeEnvironment(cleaned) ? { status: "valid", value: cleaned } : { status: "invalid" };
+  return isHugmeidRuntimeEnvironment(cleaned) ? { status: "valid", value: cleaned } : { status: "invalid" };
 }
 
 function sanitizeRuntimeEnvironment(read: RuntimeEnvironmentRead): SanitizedRuntimeEnvironment {
@@ -69,12 +69,12 @@ function sanitizeRuntimeEnvironment(read: RuntimeEnvironmentRead): SanitizedRunt
 }
 
 export function resolveDatabaseRuntimeEnvironment(env: NodeJS.ProcessEnv = process.env): DatabaseRuntimeEnvironment {
-  const deployRead = readRuntimeEnvironment(env.HugNavi_DEPLOY_ENV);
-  const databaseRead = readRuntimeEnvironment(env.HugNavi_DATABASE_ENV);
+  const deployRead = readRuntimeEnvironment(env.HUGMEID_DEPLOY_ENV);
+  const databaseRead = readRuntimeEnvironment(env.HUGMEID_DATABASE_ENV);
   const databaseEnv = databaseRead.status === "valid" ? databaseRead.value : undefined;
 
   if (deployRead.status === "missing" && env.NODE_ENV === "production") {
-    throw new DatabaseConfigError("HugNavi_DEPLOY_ENV is required when NODE_ENV is production", {
+    throw new DatabaseConfigError("HUGMEID_DEPLOY_ENV is required when NODE_ENV is production", {
       code: "deploy_env_required",
       deployEnv: "missing",
       databaseEnv: sanitizeRuntimeEnvironment(databaseRead),
@@ -82,7 +82,7 @@ export function resolveDatabaseRuntimeEnvironment(env: NodeJS.ProcessEnv = proce
   }
 
   if (deployRead.status === "invalid") {
-    throw new DatabaseConfigError("HugNavi_DEPLOY_ENV must be local, staging, or production", {
+    throw new DatabaseConfigError("HUGMEID_DEPLOY_ENV must be local, staging, or production", {
       code: "deploy_env_invalid",
       deployEnv: "invalid",
       databaseEnv: sanitizeRuntimeEnvironment(databaseRead),
@@ -92,7 +92,7 @@ export function resolveDatabaseRuntimeEnvironment(env: NodeJS.ProcessEnv = proce
   const deployEnv = deployRead.status === "valid" ? deployRead.value : "local";
 
   if (databaseRead.status === "invalid") {
-    throw new DatabaseConfigError("HugNavi_DATABASE_ENV must be local, staging, or production", {
+    throw new DatabaseConfigError("HUGMEID_DATABASE_ENV must be local, staging, or production", {
       code: "database_env_invalid",
       deployEnv,
       databaseEnv: "invalid",
@@ -100,7 +100,7 @@ export function resolveDatabaseRuntimeEnvironment(env: NodeJS.ProcessEnv = proce
   }
 
   if (!databaseEnv && deployEnv !== "local") {
-    throw new DatabaseConfigError("HugNavi_DATABASE_ENV is required for staging and production deployments", {
+    throw new DatabaseConfigError("HUGMEID_DATABASE_ENV is required for staging and production deployments", {
       code: "database_env_required",
       deployEnv,
       databaseEnv: "missing",
@@ -110,7 +110,7 @@ export function resolveDatabaseRuntimeEnvironment(env: NodeJS.ProcessEnv = proce
   const resolvedDatabaseEnv = databaseEnv ?? "local";
 
   if (env.NODE_ENV === "production" && deployEnv === "local") {
-    throw new DatabaseConfigError("HugNavi_DEPLOY_ENV cannot be local when NODE_ENV is production", {
+    throw new DatabaseConfigError("HUGMEID_DEPLOY_ENV cannot be local when NODE_ENV is production", {
       code: "deploy_env_invalid",
       deployEnv,
       databaseEnv: resolvedDatabaseEnv,
@@ -118,7 +118,7 @@ export function resolveDatabaseRuntimeEnvironment(env: NodeJS.ProcessEnv = proce
   }
 
   if (deployEnv !== "local" && resolvedDatabaseEnv !== deployEnv) {
-    throw new DatabaseConfigError("HugNavi_DATABASE_ENV must match HugNavi_DEPLOY_ENV outside local development", {
+    throw new DatabaseConfigError("HUGMEID_DATABASE_ENV must match HUGMEID_DEPLOY_ENV outside local development", {
       code: "database_env_mismatch",
       deployEnv,
       databaseEnv: resolvedDatabaseEnv,

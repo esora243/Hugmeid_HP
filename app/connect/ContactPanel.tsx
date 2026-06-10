@@ -30,7 +30,7 @@ const fieldClassName =
   "w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm";
 
 function buildMailtoHref(contactEmail: string, formData: ContactFormData) {
-  const subject = encodeURIComponent(`HugNavi お問い合わせ: ${formData.category}`);
+  const subject = encodeURIComponent(`Hugmeid お問い合わせ: ${formData.category}`);
   const body = encodeURIComponent(
     [
       `お名前: ${formData.name}`,

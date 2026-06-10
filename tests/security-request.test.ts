@@ -6,16 +6,16 @@ import { rejectRateLimitedRequest } from "../lib/security/rate-limit";
 import { readJsonRequestBody, rejectCrossSiteRequest } from "../lib/security/request";
 
 test("mutating request guard accepts same-origin requests", () => {
-  const request = new Request("https://HugNavi.example/api/me/profile", {
+  const request = new Request("https://hugmeid.example/api/me/profile", {
     method: "PUT",
-    headers: { origin: "https://HugNavi.example" },
+    headers: { origin: "https://hugmeid.example" },
   });
 
   assert.equal(rejectCrossSiteRequest(request), null);
 });
 
 test("mutating request guard rejects cross-site browser requests", async () => {
-  const request = new Request("https://HugNavi.example/api/me/profile", {
+  const request = new Request("https://hugmeid.example/api/me/profile", {
     method: "PUT",
     headers: { origin: "https://evil.example" },
   });
@@ -32,7 +32,7 @@ test("mutating request guard rejects cross-site browser requests", async () => {
 test("mutating request guard fails closed for missing browser origin in production", async () => {
   const previousNodeEnv = process.env.NODE_ENV;
   Object.defineProperty(process.env, "NODE_ENV", { value: "production", configurable: true, enumerable: true, writable: true });
-  const request = new Request("https://HugNavi.example/api/me/profile", {
+  const request = new Request("https://hugmeid.example/api/me/profile", {
     method: "PUT",
   });
 
@@ -43,7 +43,7 @@ test("mutating request guard fails closed for missing browser origin in producti
 });
 
 test("mutating request guard rejects same-site requests without origin", async () => {
-  const request = new Request("https://HugNavi.example/api/me/profile", {
+  const request = new Request("https://hugmeid.example/api/me/profile", {
     method: "PUT",
     headers: { "sec-fetch-site": "same-site" },
   });
@@ -54,7 +54,7 @@ test("mutating request guard rejects same-site requests without origin", async (
 });
 
 test("mutating request guard accepts same-origin fetch metadata without origin", () => {
-  const request = new Request("https://HugNavi.example/api/me/profile", {
+  const request = new Request("https://hugmeid.example/api/me/profile", {
     method: "PUT",
     headers: { "sec-fetch-site": "same-origin" },
   });
@@ -63,10 +63,10 @@ test("mutating request guard accepts same-origin fetch metadata without origin",
 });
 
 test("mutating request guard rejects oversized declared bodies", async () => {
-  const request = new Request("https://HugNavi.example/api/me/profile", {
+  const request = new Request("https://hugmeid.example/api/me/profile", {
     method: "PUT",
     headers: {
-      origin: "https://HugNavi.example",
+      origin: "https://hugmeid.example",
       "content-length": String(16 * 1024 + 1),
     },
   });
@@ -81,7 +81,7 @@ test("mutating request guard rejects oversized declared bodies", async () => {
 });
 
 test("limited JSON reader rejects oversized bodies without content-length", async () => {
-  const request = new Request("https://HugNavi.example/api/me/profile", {
+  const request = new Request("https://hugmeid.example/api/me/profile", {
     method: "PUT",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ value: "x".repeat(16 * 1024) }),
@@ -99,7 +99,7 @@ test("limited JSON reader rejects oversized bodies without content-length", asyn
 });
 
 test("limited JSON reader rejects non-JSON content types", async () => {
-  const request = new Request("https://HugNavi.example/api/me/profile", {
+  const request = new Request("https://hugmeid.example/api/me/profile", {
     method: "PUT",
     headers: { "content-type": "text/plain" },
     body: JSON.stringify({ value: "ok" }),
@@ -116,7 +116,7 @@ test("limited JSON reader rejects non-JSON content types", async () => {
 });
 
 test("limited JSON reader rejects malformed JSON bodies", async () => {
-  const request = new Request("https://HugNavi.example/api/me/profile", {
+  const request = new Request("https://hugmeid.example/api/me/profile", {
     method: "PUT",
     headers: { "content-type": "application/json" },
     body: "{",
@@ -133,7 +133,7 @@ test("limited JSON reader rejects malformed JSON bodies", async () => {
 });
 
 test("rate limiter rejects repeated requests from the same client", async () => {
-  const request = new Request("https://HugNavi.example/api/auth/line/session", {
+  const request = new Request("https://hugmeid.example/api/auth/line/session", {
     method: "POST",
     headers: { "x-forwarded-for": "203.0.113.10, 35.191.0.1" },
   });
@@ -147,11 +147,11 @@ test("rate limiter rejects repeated requests from the same client", async () => 
 });
 
 test("rate limiter ignores spoofed leading forwarded-for values", async () => {
-  const first = new Request("https://HugNavi.example/api/auth/line/session", {
+  const first = new Request("https://hugmeid.example/api/auth/line/session", {
     method: "POST",
     headers: { "x-forwarded-for": "198.51.100.1, 203.0.113.10, 35.191.0.1" },
   });
-  const second = new Request("https://HugNavi.example/api/auth/line/session", {
+  const second = new Request("https://hugmeid.example/api/auth/line/session", {
     method: "POST",
     headers: { "x-forwarded-for": "198.51.100.2, 203.0.113.10, 35.191.0.1" },
   });
@@ -163,15 +163,15 @@ test("rate limiter ignores spoofed leading forwarded-for values", async () => {
 });
 
 test("rate limiter uses single-hop forwarded-for instead of a global fallback bucket", async () => {
-  const first = new Request("https://HugNavi.example/api/auth/line/session", {
+  const first = new Request("https://hugmeid.example/api/auth/line/session", {
     method: "POST",
     headers: { "x-forwarded-for": "203.0.113.10" },
   });
-  const second = new Request("https://HugNavi.example/api/auth/line/session", {
+  const second = new Request("https://hugmeid.example/api/auth/line/session", {
     method: "POST",
     headers: { "x-forwarded-for": "203.0.113.11" },
   });
-  const repeatedFirst = new Request("https://HugNavi.example/api/auth/line/session", {
+  const repeatedFirst = new Request("https://hugmeid.example/api/auth/line/session", {
     method: "POST",
     headers: { "x-forwarded-for": "203.0.113.10" },
   });

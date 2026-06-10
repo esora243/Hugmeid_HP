@@ -1,13 +1,13 @@
-# HugNavi Web
+# Hugmeid Web
 
-HugNavi Web is a Next.js App Router application for the Phase 1 LIFF-based medical-student platform.
+Hugmeid Web is a Next.js App Router application for the Phase 1 LIFF-based medical-student platform.
 
 ## Current Backend Contract
 
 - LINE authentication uses a LIFF ID token posted to a Next.js Route Handler.
-- The server verifies the token, resolves the HugNavi user, and issues a signed httpOnly HugNavi session cookie.
+- The server verifies the token, resolves the Hugmeid user, and issues a signed httpOnly Hugmeid session cookie.
 - Browser code must not receive raw `line_uid`, LINE tokens, or database credentials.
-- Personal data APIs are scoped by the HugNavi session `userId`.
+- Personal data APIs are scoped by the Hugmeid session `userId`.
 - Private Cloud SQL tables are accessed from Route Handlers after session checks.
 - Public jobs prefer slug URLs. UUID lookup remains compatibility-only.
 - Campaign saves remain local-only in Phase 1.

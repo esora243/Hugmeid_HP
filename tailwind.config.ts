@@ -11,16 +11,6 @@ const config: Config = {
       fontFamily: {
         sans: ["'Noto Sans JP'", "'Inter'", "sans-serif"],
       },
-      colors: {
-        brand: {
-          50: "#FFF9FA",
-          100: "#FFEDD5",
-          400: "#FB923C",
-          500: "#F97316",
-          600: "#EA580C",
-          accent: "#FB7185",
-        },
-      },
       keyframes: {
         "fade-in": {
           "0%": { opacity: "0" },
@@ -34,16 +24,11 @@ const config: Config = {
           "0%": { transform: "translateX(8px)", opacity: "0" },
           "100%": { transform: "translateX(0)", opacity: "1" },
         },
-        "slide-in-from-top": {
-          "0%": { transform: "translateY(-8px)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
-        },
       },
       animation: {
         "fade-in": "fade-in 0.3s ease-out",
         "slide-in-bottom": "slide-in-from-bottom 0.3s ease-out",
         "slide-in-right": "slide-in-from-right 0.3s ease-out",
-        "slide-in-top": "slide-in-from-top 0.3s ease-out",
       },
     },
   },

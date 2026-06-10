@@ -1,12 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
+// ※ UIを消したため、lucide-react のアイコンインポートは不要になりました
 
 type LiffChromeState = {
   isInClient: boolean;
+  canShare: boolean;
+  canClose: boolean;
 };
 
-// 黒枠UIを削除したため、ブラウザ起動時の余分なオフセット(黒枠分の高さ)を 0px に設定
+// メニューバーを非表示にするため、外部ブラウザで開いた時の余白設定も「0px」に修正しています
 const chromeOffsets = {
   liff: { navTop: "0px", browserBottom: "0px" },
   browser: { navTop: "0px", browserBottom: "0px" },
@@ -21,12 +26,13 @@ function hasLiffSignal() {
 
 function setBrowserChromeOffsets(isInClient: boolean) {
   const offsets = isInClient ? chromeOffsets.liff : chromeOffsets.browser;
-  document.documentElement.style.setProperty("--HugNavi-nav-top", offsets.navTop);
-  document.documentElement.style.setProperty("--HugNavi-browser-bottom", offsets.browserBottom);
+  document.documentElement.style.setProperty("--hugmeid-nav-top", offsets.navTop);
+  document.documentElement.style.setProperty("--hugmeid-browser-bottom", offsets.browserBottom);
 }
 
 export function AppBrowserChrome() {
-  const [liffState, setLiffState] = useState<LiffChromeState>({ isInClient: false });
+  const router = useRouter();
+  const [liffState, setLiffState] = useState<LiffChromeState>({ isInClient: false, canShare: false, canClose: false });
 
   useEffect(() => {
     let cancelled = false;
@@ -40,7 +46,7 @@ export function AppBrowserChrome() {
         const { initLiff } = await import("@/lib/liff/client");
         const state = await initLiff();
         if (!cancelled) {
-          setLiffState({ isInClient: state.isInClient });
+          setLiffState({ isInClient: state.isInClient, canShare: state.canShare, canClose: state.canClose });
           setBrowserChromeOffsets(state.isInClient);
         }
       } catch {
@@ -54,6 +60,6 @@ export function AppBrowserChrome() {
     };
   }, []);
 
-  // ヘッダーおよびフッターの黒枠（疑似ブラウザUI）は描画せず完全に削除します
+  // ★ 変更点: 常に何も表示しない（nullを返す）ことで、上下の黒いメニューバーを完全に削除
   return null;
 }
