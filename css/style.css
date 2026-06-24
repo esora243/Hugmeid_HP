@@ -1019,7 +1019,6 @@ section {
     width: 100%;
   }
 
-  /* --- 追加：画像レイアウトのスマホ対応 --- */
   .message-wrapper {
     flex-direction: column;
   }
@@ -1034,4 +1033,64 @@ section {
   .email-image-wrapper img {
     max-height: 28px;
   }
+}
+
+/* ====================================
+   LINEデモ画面セクション
+   ==================================== */
+.line-demo-section {
+  background-color: var(--color-white); /* 白を基調 */
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.line-demo-inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.line-demo-title {
+  color: #000080; /* 紺色 */
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.line-demo-desc {
+  color: var(--color-text);
+  margin-bottom: 40px;
+  font-size: 1rem;
+}
+
+/* スマホ風の枠組み設定 */
+.line-demo-mockup {
+  background-color: #e0f2fe; /* 水色 */
+  border: 4px solid #000080; /* 紺色のフレーム */
+  border-radius: 30px;
+  padding: 16px;
+  max-width: 320px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+/* 画面上部のスピーカー部分の装飾 */
+.line-demo-mockup::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 6px;
+  background-color: #000080;
+  border-radius: 10px;
+}
+
+.line-demo-img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  display: block;
+  margin-top: 10px;
 }
