@@ -1097,6 +1097,7 @@ section {
   border-radius: 16px;
   display: block;
   margin-top: 10px;
+<<<<<<< HEAD
 }
 
 /* ====================================
@@ -1407,4 +1408,6 @@ section {
 @media (max-width: 768px) {
   .blog-grid { grid-template-columns: 1fr; }
   .blog-article { padding: 28px 24px; }
+=======
+>>>>>>> 5565ee2c12f5b50be8eb08e0c32f1e1a73147eca
 }
