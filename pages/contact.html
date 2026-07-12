@@ -45,6 +45,7 @@
 <section style="padding: 60px 0 96px;">
   <div class="container-narrow">
 
+    <!-- ご案内イントロカード -->
     <div class="card fade-in" style="padding: 44px 40px; margin-bottom: 48px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border-left: 6px solid var(--color-primary);">
       <h2 style="font-size: 1.45rem; font-weight: 800; color: var(--color-primary-dark); margin-bottom: 16px;">
         地域医療の未来を、ともにつくる。
@@ -63,12 +64,14 @@
       </div>
     </div>
 
+    <!-- ▼ Googleフォーム連携 本番フォーム ▼ -->
     <div class="contact-form fade-in" style="margin-bottom: 40px; position: relative;">
       <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--color-primary-dark); margin-bottom: 32px; text-align: center; position: relative; padding-bottom: 16px;">
         お問い合わせフォーム
         <span style="display: block; width: 40px; height: 3px; background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); margin: 12px auto 0; border-radius: 2px;"></span>
       </h2>
 
+      <!-- 送信完了時に表示するサンクスメッセージ（初期状態は非表示） -->
       <div id="thanksMessage" style="display: none; text-align: center; padding: 48px 20px; background: var(--color-bg-alt); border-radius: var(--radius); border: 2px solid var(--color-accent);">
         <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 20px; font-weight: bold;">✓</div>
         <h3 style="color: var(--color-primary-dark); font-size: 1.4rem; font-weight: 800; margin-bottom: 12px;">お問い合わせを送信しました</h3>
@@ -78,6 +81,7 @@
         <a href="../index.html" class="btn btn-outline" style="padding: 12px 28px; font-size: 0.9rem;">トップページへ戻る</a>
       </div>
 
+      <!-- 送信先URL・IDマッピング設定済み -->
       <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfpfo_EcCOJUdo3u6cyhdNy7fiCVvwsGWr2zXxNfcJo_5GsSA/formResponse" 
             method="POST" 
             target="hidden_iframe" 
@@ -85,27 +89,27 @@
         
         <div class="form-group">
           <label for="name">お名前 <span class="required">必須</span></label>
-          <input type="text" id="name" name="entry.111111111" required placeholder="例：医療 太郎">
+          <input type="text" id="name" name="entry.2001258603" required placeholder="例：医療 太郎">
         </div>
 
         <div class="form-group">
           <label for="company">会社・団体名</label>
-          <input type="text" id="company" name="entry.222222222" placeholder="例：株式会社はぐめいど / 〇〇大学医学部">
+          <input type="text" id="company" name="entry.2099957592" placeholder="例：株式会社はぐめいど / 〇〇大学医学部">
         </div>
 
         <div class="form-group">
           <label for="email">メールアドレス <span class="required">必須</span></label>
-          <input type="email" id="email" name="entry.333333333" required placeholder="例：info@hugmeid.co.jp">
+          <input type="email" id="email" name="entry.1147716575" required placeholder="例：info@hugmeid.co.jp">
         </div>
 
         <div class="form-group">
           <label for="phone">電話番号</label>
-          <input type="tel" id="phone" name="entry.444444444" placeholder="例：090-1234-5678">
+          <input type="tel" id="phone" name="entry.2031173501" placeholder="例：090-1234-5678">
         </div>
 
         <div class="form-group">
           <label for="category">お問い合わせ種別 <span class="required">必須</span></label>
-          <select id="category" name="entry.555555555" required>
+          <select id="category" name="entry.454580292" required>
             <option value="">選択してください</option>
             <option value="事業連携について">事業連携について</option>
             <option value="HugNaviでの協業について">HugNaviでの協業について</option>
@@ -116,7 +120,7 @@
 
         <div class="form-group">
           <label for="message">お問い合わせ内容 <span class="required">必須</span></label>
-          <textarea id="message" name="entry.666666666" required placeholder="具体的なご相談内容や背景をご記入ください"></textarea>
+          <textarea id="message" name="entry.2126918397" required placeholder="具体的なご相談内容や背景をご記入ください"></textarea>
         </div>
 
         <div class="form-note">
@@ -131,8 +135,12 @@
         </div>
       </form>
 
+      <!-- 画面遷移を防ぐための隠しiframe -->
       <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(this.submitted){ showThanks(); }"></iframe>
     </div>
+    <!-- ▲ Googleフォーム連携 本番フォーム ここまで ▲ -->
+
+    <!-- フォーム下案内 -->
     <div class="fade-in" style="text-align: center; padding: 24px; color: var(--color-text-light); font-size: 0.92rem;">
       <p style="margin: 0;">
         内容を確認のうえ、担当者より順次ご連絡いたします。<br class="pc-only">
@@ -170,6 +178,7 @@
 
 <script src="../js/main.js"></script>
 
+<!-- Googleフォーム送信処理＆サンクスメッセージ表示スクリプト -->
 <script>
   let submitted = false;
 
