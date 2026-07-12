@@ -22,10 +22,9 @@
         <li><a href="achievements.html">事業実績</a></li>
         <li><a href="blog/index.html">ブログ</a></li>
         <li><a href="company.html">会社情報</a></li>
-        <li><a href="contact.html" class="nav-cta">お問い合わせ</a></li>
+        <li><a href="contact.html" class="nav-cta active">お問い合わせ</a></li>
       </ul>
     </nav>
-
   </div>
 </header>
 <nav class="breadcrumb-nav" aria-label="パンくずリスト">
@@ -38,81 +37,106 @@
 
 
 <section class="page-header">
+  <span style="display: inline-block; background: var(--color-accent-light); color: var(--color-primary); font-size: 0.82rem; font-weight: 700; padding: 6px 18px; border-radius: 50px; margin-bottom: 16px; letter-spacing: 0.08em; box-shadow: var(--shadow-sm);">CONTACT ／ ご相談・お問い合わせ</span>
   <h1>お問い合わせ</h1>
   <div class="breadcrumb"><a href="../index.html">TOP</a> ／ お問い合わせ</div>
 </section>
 
-<section>
+<section style="padding: 60px 0 96px;">
   <div class="container-narrow">
 
-    <div class="content-block fade-in">
-      <h2>ご案内</h2>
-      <p>
-        事業内容に関するご質問、パートナーシップのご相談、取材・登壇のご依頼などがございましたら、お問い合わせフォームよりご連絡ください。
+    <div class="card fade-in" style="padding: 44px 40px; margin-bottom: 48px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border-left: 6px solid var(--color-primary);">
+      <h2 style="font-size: 1.45rem; font-weight: 800; color: var(--color-primary-dark); margin-bottom: 16px;">
+        地域医療の未来を、ともにつくる。
+      </h2>
+      <p style="color: var(--color-text-light); line-height: 1.9; font-size: 1.02rem; margin-bottom: 24px;">
+        事業内容に関するご質問、パートナーシップのご相談、取材・登壇のご依頼などがございましたら、以下のお問い合わせフォームよりお気軽にご連絡ください。担当者より順次ご返信いたします。
       </p>
+      
+      <div style="background: var(--color-bg-alt); padding: 24px 28px; border-radius: var(--radius); border: 1px solid rgba(208, 227, 255, 0.6);">
+        <h3 style="font-size: 1rem; color: var(--color-primary-dark); font-weight: 800; margin-bottom: 12px;">主なお問い合わせ内容</h3>
+        <ul class="check-list" style="margin: 0;">
+          <li style="font-weight: 600; color: var(--color-primary-dark);">事業連携やパートナーシップについて相談したい</li>
+          <li style="font-weight: 600; color: var(--color-primary-dark);">HugNaviでの協業・情報発信について相談したい</li>
+          <li style="font-weight: 600; color: var(--color-primary-dark);">取材・講演を依頼したい</li>
+        </ul>
+      </div>
     </div>
 
-    <div class="content-block fade-in">
-      <h2>主なお問い合わせ内容</h2>
-      <ul class="check-list">
-        <li>事業連携について相談したい</li>
-        <li>HugNaviでの協業・情報発信について相談したい</li>
-        <li>取材・講演を依頼したい</li>
-      </ul>
+    <div class="contact-form fade-in" style="margin-bottom: 40px; position: relative;">
+      <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--color-primary-dark); margin-bottom: 32px; text-align: center; position: relative; padding-bottom: 16px;">
+        お問い合わせフォーム
+        <span style="display: block; width: 40px; height: 3px; background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); margin: 12px auto 0; border-radius: 2px;"></span>
+      </h2>
+
+      <div id="thanksMessage" style="display: none; text-align: center; padding: 48px 20px; background: var(--color-bg-alt); border-radius: var(--radius); border: 2px solid var(--color-accent);">
+        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 20px; font-weight: bold;">✓</div>
+        <h3 style="color: var(--color-primary-dark); font-size: 1.4rem; font-weight: 800; margin-bottom: 12px;">お問い合わせを送信しました</h3>
+        <p style="color: var(--color-text-light); line-height: 1.8; font-size: 0.98rem; margin-bottom: 24px;">
+          ご送信ありがとうございます。<br>内容を確認のうえ、担当者より順次ご連絡いたしますので、今しばらくお待ちください。
+        </p>
+        <a href="../index.html" class="btn btn-outline" style="padding: 12px 28px; font-size: 0.9rem;">トップページへ戻る</a>
+      </div>
+
+      <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfpfo_EcCOJUdo3u6cyhdNy7fiCVvwsGWr2zXxNfcJo_5GsSA/formResponse" 
+            method="POST" 
+            target="hidden_iframe" 
+            id="googleContactForm">
+        
+        <div class="form-group">
+          <label for="name">お名前 <span class="required">必須</span></label>
+          <input type="text" id="name" name="entry.111111111" required placeholder="例：医療 太郎">
+        </div>
+
+        <div class="form-group">
+          <label for="company">会社・団体名</label>
+          <input type="text" id="company" name="entry.222222222" placeholder="例：株式会社はぐめいど / 〇〇大学医学部">
+        </div>
+
+        <div class="form-group">
+          <label for="email">メールアドレス <span class="required">必須</span></label>
+          <input type="email" id="email" name="entry.333333333" required placeholder="例：info@hugmeid.co.jp">
+        </div>
+
+        <div class="form-group">
+          <label for="phone">電話番号</label>
+          <input type="tel" id="phone" name="entry.444444444" placeholder="例：090-1234-5678">
+        </div>
+
+        <div class="form-group">
+          <label for="category">お問い合わせ種別 <span class="required">必須</span></label>
+          <select id="category" name="entry.555555555" required>
+            <option value="">選択してください</option>
+            <option value="事業連携について">事業連携について</option>
+            <option value="HugNaviでの協業について">HugNaviでの協業について</option>
+            <option value="取材・講演依頼">取材・講演依頼</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">お問い合わせ内容 <span class="required">必須</span></label>
+          <textarea id="message" name="entry.666666666" required placeholder="具体的なご相談内容や背景をご記入ください"></textarea>
+        </div>
+
+        <div class="form-note">
+          ご入力いただいた個人情報は、お問い合わせに対するご対応のみに利用いたします。<br>
+          送信ボタンを押すことで、当社のプライバシーポリシーに同意したものとみなされます。
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+          <button type="submit" class="btn btn-primary" id="submitBtn" style="width: 100%; max-width: 340px; font-size: 1.05rem; padding: 18px 32px; box-shadow: var(--shadow-md);">
+            上記に同意して送信する
+          </button>
+        </div>
+      </form>
+
+      <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(this.submitted){ showThanks(); }"></iframe>
     </div>
-
-    <form class="contact-form fade-in" id="contactForm">
-      <h2 style="color:var(--color-primary-dark); margin-bottom: 24px;">お問い合わせフォーム</h2>
-
-      <div class="form-group">
-        <label for="name">お名前<span class="required">必須</span></label>
-        <input type="text" id="name" name="name" required>
-      </div>
-
-      <div class="form-group">
-        <label for="company">会社・団体名</label>
-        <input type="text" id="company" name="company">
-      </div>
-
-      <div class="form-group">
-        <label for="email">メールアドレス<span class="required">必須</span></label>
-        <input type="email" id="email" name="email" required>
-      </div>
-
-      <div class="form-group">
-        <label for="phone">電話番号</label>
-        <input type="tel" id="phone" name="phone">
-      </div>
-
-      <div class="form-group">
-        <label for="category">お問い合わせ種別<span class="required">必須</span></label>
-        <select id="category" name="category" required>
-          <option value="">選択してください</option>
-          <option value="business">事業連携について</option>
-          <option value="hugnavi">HugNaviでの協業について</option>
-          <option value="press">取材・講演依頼</option>
-          <option value="other">その他</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="message">お問い合わせ内容<span class="required">必須</span></label>
-        <textarea id="message" name="message" required placeholder="お問い合わせ内容をご記入ください"></textarea>
-      </div>
-
-      <div class="form-note">
-        ※このフォームはデモです。実際の送信機能は実装されていません。
-      </div>
-
-      <div style="text-align:center;">
-        <button type="submit" class="btn btn-primary">送信する</button>
-      </div>
-    </form>
-
-    <div class="content-block fade-in" style="margin-top: 32px;">
-      <h2>フォーム下案内</h2>
-      <p>
-        内容を確認のうえ、担当者より順次ご連絡いたします。お問い合わせ内容によっては、ご返信までにお時間をいただく場合があります。
+    <div class="fade-in" style="text-align: center; padding: 24px; color: var(--color-text-light); font-size: 0.92rem;">
+      <p style="margin: 0;">
+        内容を確認のうえ、担当者より順次ご連絡いたします。<br class="pc-only">
+        お問い合わせ内容によっては、ご返信までにお時間をいただく場合がありますのであらかじめご了承ください。
       </p>
     </div>
 
@@ -128,10 +152,7 @@
     </div>
     <div class="footer-col"><h4>サービス</h4><ul>
       <li><a href="hugnavi.html">HugNavi</a></li>
-<<<<<<< HEAD
       <li><a href="blog/index.html">ブログ</a></li>
-=======
->>>>>>> 5565ee2c12f5b50be8eb08e0c32f1e1a73147eca
     </ul></div>
     <div class="footer-col"><h4>会社情報</h4><ul>
       <li><a href="company.html">会社概要</a></li>
@@ -148,5 +169,30 @@
 
 
 <script src="../js/main.js"></script>
+
+<script>
+  let submitted = false;
+
+  document.getElementById('googleContactForm').addEventListener('submit', function() {
+    const btn = document.getElementById('submitBtn');
+    btn.innerHTML = '送信中...';
+    btn.style.opacity = '0.8';
+    btn.style.pointerEvents = 'none'; // 連打防止
+    
+    // iframeの読み込み検知用フラグを立てる
+    document.getElementById('hidden_iframe').submitted = true;
+  });
+
+  function showThanks() {
+    // フォームを非表示にして、サンクスメッセージを表示する
+    document.getElementById('googleContactForm').style.display = 'none';
+    const thanks = document.getElementById('thanksMessage');
+    thanks.style.display = 'block';
+    
+    // サンクスメッセージの位置へスクロール
+    thanks.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+</script>
+
 </body>
 </html>
