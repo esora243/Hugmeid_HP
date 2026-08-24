@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>News — 株式会社はぐめいど</title>
+<meta name="description" content="株式会社はぐめいどの最新ニュース。事業実績・イベント開催報告・メディア掲載情報をお届けします。"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============ Design Tokens (index.htmlと共通) ============ */
+  :root {
+    --navy-900: #0A2540;
+    --navy-800: #143559;
+    --navy-700: #1E4874;
+    --navy-500: #3D6A94;
+    --teal-600: #0891A6;
+    --teal-500: #1BA7BC;
+    --teal-100: #D6EEF2;
+    --coral: #E8735A;
+    --coral-soft: #F3A48F;
+    --paper: #FAFAF7;
+    --paper-2: #F2F0EA;
+    --ink-900: #0F1B2A;
+    --ink-700: #2C3B4F;
+    --ink-500: #5A6B80;
+    --ink-400: #8C99AB;
+    --line: #DDD8CE;
+    --line-strong: #B8B2A5;
+
+    --font-sans: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+    --font-serif: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+    --font-display: "Fraunces", "Noto Serif JP", serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+    --max: 1240px;
+    --gutter: clamp(20px, 4vw, 48px);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    color: var(--ink-900);
+    background: var(--paper);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  img, svg { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; }
+  ::selection { background: var(--navy-900); color: var(--paper); }
+
+  .wrap {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* ============ Nav (同じ体裁) ============ */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 18px 0;
+    transition: background .3s ease, backdrop-filter .3s ease, border-color .3s ease;
+    border-bottom: 1px solid transparent;
+  }
+  .nav.scrolled {
+    background: rgba(250, 250, 247, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom-color: var(--line);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+    color: var(--navy-900);
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-size: 13px;
+    color: var(--ink-700);
+    letter-spacing: 0.04em;
+  }
+  .nav-links a { transition: color .2s; }
+  .nav-links a:hover { color: var(--teal-600); }
+  .nav-links a.active { color: var(--teal-600); }
+  .nav-cta {
+    padding: 10px 20px;
+    background: var(--navy-900);
+    color: var(--paper);
+    border-radius: 999px;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    transition: background .2s, transform .2s;
+  }
+  .nav-cta:hover { background: var(--teal-600); transform: translateY(-1px); }
+  @media (max-width: 840px) { .nav-links { display: none; } }
+
+  /* ============ Page Header ============ */
+  .page-head {
+    padding: clamp(140px, 20vw, 200px) 0 clamp(48px, 6vw, 80px);
+    border-bottom: 1px solid var(--line);
+  }
+  .page-head-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: end;
+  }
+  @media (max-width: 720px) {
+    .page-head-inner { grid-template-columns: 1fr; align-items: start; }
+  }
+  .page-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--teal-600);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .page-eyebrow::before {
+    content: "";
+    width: 24px; height: 1px;
+    background: var(--teal-600);
+  }
+  .page-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: clamp(32px, 4.8vw, 56px);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin: 0 0 20px;
+    color: var(--navy-900);
+  }
+  .page-lede {
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--ink-700);
+    max-width: 40em;
+    margin: 0;
+  }
+  .page-count {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .page-count strong {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--navy-900);
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  /* ============ Filter Tabs ============ */
+  .filters {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 68px;
+    background: var(--paper);
+    z-index: 50;
+  }
+  .filter-inner {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-btn {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink-700);
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    border-radius: 999px;
+    transition: all .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .filter-btn .cnt {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-400);
+  }
+  .filter-btn:hover {
+    border-color: var(--navy-900);
+    color: var(--navy-900);
+  }
+  .filter-btn.active {
+    background: var(--navy-900);
+    border-color: var(--navy-900);
+    color: var(--paper);
+  }
+  .filter-btn.active .cnt { color: rgba(250,250,247,0.6); }
+
+  /* ============ News List ============ */
+  .news-section {
+    padding: clamp(48px, 6vw, 80px) 0 clamp(80px, 12vw, 140px);
+  }
+
+  .news-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--line);
+  }
+  .news-item {
+    display: grid;
+    grid-template-columns: 140px 140px 1fr auto;
+    gap: clamp(20px, 3vw, 48px);
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+    transition: background .2s;
+    cursor: pointer;
+    position: relative;
+  }
+  .news-item:hover {
+    background: rgba(10, 37, 64, 0.02);
+  }
+  .news-item::before {
+    content: "";
+    position: absolute;
+    left: -16px; right: -16px;
+    top: 0; bottom: 0;
+    background: transparent;
+    transition: background .2s;
+    z-index: -1;
+  }
+  .news-item:hover::before {
+    background: rgba(10, 37, 64, 0.02);
+  }
+  @media (max-width: 780px) {
+    .news-item {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 28px 0;
+    }
+  }
+
+  .news-date {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-500);
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+  }
+  .news-date .yr {
+    display: block;
+    font-size: 11px;
+    color: var(--ink-400);
+  }
+  @media (max-width: 780px) {
+    .news-date {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .news-date .yr { display: inline; }
+  }
+
+  .news-cat {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    justify-self: start;
+    align-self: center;
+    border: 1px solid;
+    line-height: 1.8;
+    white-space: nowrap;
+  }
+  .news-cat.achievement {
+    color: var(--teal-600);
+    border-color: var(--teal-600);
+    background: var(--teal-100);
+  }
+  .news-cat.event {
+    color: var(--coral);
+    border-color: var(--coral-soft);
+    background: rgba(232, 115, 90, 0.08);
+  }
+  .news-cat.media {
+    color: var(--navy-700);
+    border-color: var(--navy-500);
+    background: rgba(30, 72, 116, 0.06);
+  }
+  .news-cat.notice {
+    color: var(--ink-700);
+    border-color: var(--line-strong);
+    background: var(--paper-2);
+  }
+
+  .news-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: clamp(16px, 1.8vw, 19px);
+    color: var(--navy-900);
+    margin: 0 0 6px;
+    line-height: 1.65;
+    letter-spacing: -0.005em;
+    text-wrap: pretty;
+    transition: color .2s;
+  }
+  .news-item:hover .news-title {
+    color: var(--teal-600);
+  }
+  .news-excerpt {
+    font-size: 13.5px;
+    color: var(--ink-500);
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .news-arrow {
+    color: var(--ink-400);
+    align-self: center;
+    transition: transform .25s, color .2s;
+  }
+  .news-item:hover .news-arrow {
+    color: var(--teal-600);
+    transform: translateX(4px);
+  }
+  @media (max-width: 780px) {
+    .news-arrow { display: none; }
+  }
+
+  /* ============ Empty State ============ */
+  .news-empty {
+    padding: 80px 20px;
+    text-align: center;
+    color: var(--ink-500);
+    font-family: var(--font-serif);
+    font-size: 16px;
+    display: none;
+  }
+  .news-empty.visible { display: block; }
+
+  /* ============ Pagination ============ */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 64px;
+  }
+  .pagination button {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink-700);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    transition: all .2s;
+  }
+  .pagination button:hover:not(:disabled) {
+    border-color: var(--navy-900);
+    color: var(--navy-900);
+  }
+  .pagination button.active {
+    background: var(--navy-900);
+    border-color: var(--navy-900);
+    color: var(--paper);
+  }
+  .pagination button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  /* ============ Back to home CTA ============ */
+  .backhome {
+    margin-top: 64px;
+    padding: clamp(32px, 4vw, 48px);
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .backhome-text {
+    font-family: var(--font-serif);
+    font-size: clamp(16px, 1.8vw, 20px);
+    color: var(--navy-900);
+    margin: 0;
+    line-height: 1.7;
+  }
+  .backhome a {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 26px;
+    background: var(--navy-900);
+    color: var(--paper);
+    border-radius: 999px;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    transition: background .25s, transform .25s;
+    white-space: nowrap;
+  }
+  .backhome a:hover { background: var(--teal-600); transform: translateY(-2px); }
+  .backhome a svg { transition: transform .25s; }
+  .backhome a:hover svg { transform: translateX(4px); }
+
+  /* ============ Footer ============ */
+  .footer {
+    background: var(--navy-900);
+    color: rgba(250,250,247,0.7);
+    padding: 60px 0 40px;
+    font-size: 13px;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .footer .brand { color: var(--paper); }
+  .footer-bottom {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(250,250,247,0.15);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(250,250,247,0.5);
+  }
+
+  /* ============ Reveal ============ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s cubic-bezier(.2,.7,.2,1), transform 0.7s cubic-bezier(.2,.7,.2,1);
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ================== NAV ================== -->
+<nav class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand">
+      <span>株式会社はぐめいど</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#story">Story</a>
+      <a href="index.html#mission">Mission</a>
+      <a href="index.html#services">Services</a>
+      <a href="news.html" class="active">News</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <a href="index.html#contact" class="nav-cta">お問い合わせ</a>
+  </div>
+</nav>
+
+<!-- ================== PAGE HEAD ================== -->
+<header class="page-head">
+  <div class="wrap page-head-inner">
+    <div class="reveal">
+      <div class="page-eyebrow">News &amp; Updates</div>
+      <h1 class="page-title">最新のお知らせ</h1>
+      <p class="page-lede">
+        事業の進捗、イベント開催報告、メディア掲載など、株式会社はぐめいどの活動を随時お届けします。
+      </p>
+    </div>
+    <div class="page-count reveal" id="page-count">
+      <strong id="total-num">0</strong>
+      Entries in total
+    </div>
+  </div>
+</header>
+
+<!-- ================== FILTERS ================== -->
+<div class="filters">
+  <div class="wrap filter-inner" role="tablist" aria-label="ニュースカテゴリ">
+    <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">
+      すべて <span class="cnt" data-count="all">0</span>
+    </button>
+    <button class="filter-btn" data-filter="achievement" role="tab">
+      事業実績 <span class="cnt" data-count="achievement">0</span>
+    </button>
+    <button class="filter-btn" data-filter="event" role="tab">
+      イベント <span class="cnt" data-count="event">0</span>
+    </button>
+    <button class="filter-btn" data-filter="media" role="tab">
+      メディア掲載 <span class="cnt" data-count="media">0</span>
+    </button>
+    <button class="filter-btn" data-filter="notice" role="tab">
+      お知らせ <span class="cnt" data-count="notice">0</span>
+    </button>
+  </div>
+</div>
+
+<!-- ================== NEWS LIST ================== -->
+<section class="news-section">
+  <div class="wrap">
+    <div class="news-list" id="news-list">
+      <!-- Rendered by JS -->
+    </div>
+    <div class="news-empty" id="news-empty">
+      該当するお知らせはまだありません。
+    </div>
+
+    <div class="pagination" id="pagination" hidden>
+      <button data-page="prev" aria-label="前のページ">←</button>
+      <div id="page-nums" style="display:contents;"></div>
+      <button data-page="next" aria-label="次のページ">→</button>
+    </div>
+
+    <div class="backhome reveal">
+      <p class="backhome-text">
+        私たちの想い、事業内容の詳細はトップページからご覧いただけます。
+      </p>
+      <a href="index.html">
+        トップページに戻る
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================== FOOTER ================== -->
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <a href="index.html" class="brand">
+        <span>はぐめいど</span>
+      </a>
+      <p style="margin-top:16px; max-width:400px; font-size:13px; line-height:1.85;">
+        未来を創る医師を育む。
+      </p>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    © 2026 HUG-MADE Inc. All rights reserved.
+    <a href="admin.html" style="float:right;color:rgba(250,250,247,0.45);text-decoration:underline;margin-left:16px;">管理ツール</a>
+  </div>
+</footer>
+
+<script src="news-data.js"></script>
+<script src="news-store.js"></script>
+<script>
+  // ============ News data (shared from news-data.js) ============
+  const NEWS = window.HUGMADE_NEWS || [];
+
+  // ============ State ============
+  const state = {
+    filter: 'all',
+    page: 1,
+    perPage: 8
+  };
+
+  // ============ Render ============
+  const listEl = document.getElementById('news-list');
+  const emptyEl = document.getElementById('news-empty');
+  const paginationEl = document.getElementById('pagination');
+  const pageNumsEl = document.getElementById('page-nums');
+  const totalNumEl = document.getElementById('total-num');
+
+  function formatDate(d) {
+    const [y, m, day] = d.split('-');
+    return { y, md: `${m}.${day}` };
+  }
+
+  function categoryLabel(c) {
+    return {
+      achievement: '事業実績',
+      event: 'イベント',
+      media: 'メディア',
+      notice: 'お知らせ'
+    }[c] || '';
+  }
+
+  function filtered() {
+    const sorted = [...NEWS].sort((a, b) => b.date.localeCompare(a.date));
+    if (state.filter === 'all') return sorted;
+    return sorted.filter(n => n.category === state.filter);
+  }
+
+  function render() {
+    const items = filtered();
+    const totalPages = Math.max(1, Math.ceil(items.length / state.perPage));
+    if (state.page > totalPages) state.page = totalPages;
+    const start = (state.page - 1) * state.perPage;
+    const pageItems = items.slice(start, start + state.perPage);
+
+    listEl.innerHTML = pageItems.map((n) => {
+      const { y, md } = formatDate(n.date);
+      return `
+        <article class="news-item" tabindex="0">
+          <div class="news-date">
+            <span>${md}</span>
+            <span class="yr">${y}</span>
+          </div>
+          <div class="news-cat ${n.category}">${categoryLabel(n.category)}</div>
+          <div class="news-body">
+            <h3 class="news-title">${n.title}</h3>
+            <p class="news-excerpt">${n.excerpt}</p>
+          </div>
+          <div class="news-arrow" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    emptyEl.classList.toggle('visible', items.length === 0);
+    listEl.style.display = items.length === 0 ? 'none' : '';
+
+    // Pagination
+    if (totalPages > 1) {
+      paginationEl.hidden = false;
+      pageNumsEl.innerHTML = Array.from({ length: totalPages }, (_, i) => {
+        const p = i + 1;
+        return `<button data-page="${p}" class="${p === state.page ? 'active' : ''}">${p}</button>`;
+      }).join('');
+      paginationEl.querySelector('[data-page="prev"]').disabled = state.page === 1;
+      paginationEl.querySelector('[data-page="next"]').disabled = state.page === totalPages;
+    } else {
+      paginationEl.hidden = true;
+    }
+  }
+
+  function updateCounts() {
+    totalNumEl.textContent = NEWS.length;
+    document.querySelector('[data-count="all"]').textContent = NEWS.length;
+    ['achievement', 'event', 'media', 'notice'].forEach(cat => {
+      const n = NEWS.filter(x => x.category === cat).length;
+      document.querySelector(`[data-count="${cat}"]`).textContent = n;
+    });
+  }
+
+  // ============ Events ============
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      state.filter = btn.dataset.filter;
+      state.page = 1;
+      render();
+    });
+  });
+
+  paginationEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const p = btn.dataset.page;
+    const totalPages = Math.max(1, Math.ceil(filtered().length / state.perPage));
+    if (p === 'prev') state.page = Math.max(1, state.page - 1);
+    else if (p === 'next') state.page = Math.min(totalPages, state.page + 1);
+    else state.page = parseInt(p, 10);
+    render();
+    // Scroll to top of list
+    document.querySelector('.news-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    if (window.scrollY > 20) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Initial render
+  updateCounts();
+  render();
+</script>
+
+</body>
+</html>
