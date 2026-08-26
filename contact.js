@@ -13,7 +13,7 @@
  *   あくまでデモ・ローカル用です。
  * ============================================================ */
 var CONTACT_CONFIG = {
-  endpoint: '' // ← ここに Formspree 等の送信先URLを設定（空の間はローカル受信箱に保存）
+  endpoint: 'https://formspree.io/f/xljrqpkd' 
 };
 
 (function () {
