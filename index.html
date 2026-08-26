@@ -1190,8 +1190,7 @@
       </div>
 
       <div class="hero-visual reveal">
-        <img src="assets/hero-map.png" alt="世界と日本をつなぐ地図イラスト"/>
-        <!-- illustrated map replaces prior SVG -->
+        <img src="./assets/hero-map.png" alt="世界と日本をつなぐ地図イラスト"/>
       </div>
     </div>
   </div>
@@ -1214,7 +1213,7 @@
         <h3>地域から見える、<br>日本の医療のリアル。</h3>
         <p>地域医療の現場に関わりながら、「医療の本質」について考えるきっかけを創ります。</p>
         <div class="story-map">
-          <img src="assets/story-map-japan.png" alt="日本国内の情報密度地図（都市部集中）"/>
+          <img src="./assets/story-map-japan.png" alt="日本国内の情報密度地図（都市部集中）"/>
         </div>
       </div>
 
@@ -1229,7 +1228,7 @@
         <h3>海外から俯瞰する、<br>日本の医療のリアル。</h3>
         <p>日本の医療に貢献したい！と活躍する医師を増やすために、早期から日本の医療現場を客観視する機会を提供します。</p>
         <div class="story-map">
-          <img src="assets/story-map-world.png" alt="世界の医療ネットワークと日本の地図"/>
+          <img src="./assets/story-map-world.png" alt="世界の医療ネットワークと日本の地図"/>
         </div>
       </div>
     </div>
@@ -1248,7 +1247,7 @@
   <div class="wrap">
     <div class="ceo-grid">
       <div class="ceo-body reveal">
-        <h3>株式会社はぐめいど　運営事務局</h3>
+        <h3>株式会社はぐめいど 運営事務局</h3>
         <blockquote class="ceo-quote">
           「地方の医学生でも、日本、そして世界各国で<br>
           活躍できる場を実現します。」
@@ -1282,7 +1281,7 @@
     <div class="services-grid">
       <div class="service reveal">
         <div class="service-visual" aria-hidden="true">
-          <img src="assets/service-01-platform.jpg" alt="大学カフェテリアでスマホを照らし合わせて医療情報を共有する3人の学生" loading="lazy" />
+          <img src="./assets/service-01-platform.jpg" alt="大学カフェテリアでスマホを照らし合わせて医療情報を共有する3人の学生" loading="lazy" />
         </div>
         <div class="service-body">
           <div class="service-num">01 / PLATFORM</div>
@@ -1293,7 +1292,7 @@
 
       <div class="service reveal">
         <div class="service-visual" aria-hidden="true">
-          <img src="assets/service-02-rural.jpg" alt="地方の病院で地域住民と笑顔で話す医学生" loading="lazy" />
+          <img src="./assets/service-02-rural.jpg" alt="地方の病院で地域住民と笑顔で話す医学生" loading="lazy" />
         </div>
         <div class="service-body">
           <div class="service-num">02 / RURAL PROGRAM</div>
@@ -1304,7 +1303,7 @@
 
       <div class="service reveal">
         <div class="service-visual" aria-hidden="true">
-          <img src="assets/service-03-career.jpg" alt="ワークショップで企業登壇者の話を聞き、仲間と討論する私服の医学生たち" loading="lazy" />
+          <img src="./assets/service-03-career.jpg" alt="ワークショップで企業登壇者の話を聞き、仲間と討論する私服の医学生たち" loading="lazy" />
         </div>
         <div class="service-body">
           <div class="service-num">03 / CAREER EVENTS</div>
@@ -1334,7 +1333,8 @@
     </div>
 
     <div class="news-preview-list reveal" id="news-preview-list">
-      <!-- Rendered by JS from news-data.js -->
+      <!-- 取得中などに表示するスケルトン要素やテキスト -->
+      <div style="padding:24px; color:var(--ink-500); font-size: 13px;">ニュースを読み込んでいます...</div>
     </div>
   </div>
 </section>
@@ -1413,43 +1413,71 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="news-data.js"></script>
-<script src="news-store.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script src="contact.js"></script>
+
 <script>
-  // ============ Render news preview (latest 4) ============
-  (function renderNewsPreview() {
+  // ============ Render news preview (latest 4) from microCMS ============
+  async function fetchNewsAndRender() {
     const listEl = document.getElementById('news-preview-list');
-    if (!listEl || !window.HUGMADE_NEWS) return;
-    const CATEGORIES = {
-      achievement: '事業実績',
-      event: 'イベント',
-      media: 'メディア',
-      notice: 'お知らせ'
-    };
-    const items = [...window.HUGMADE_NEWS]
-      .sort((a, b) => b.date.localeCompare(a.date))
-      .slice(0, 4);
-    listEl.innerHTML = items.map(n => {
-      const [y, m, d] = n.date.split('-');
-      return `
-        <a class="np-item" href="news.html" tabindex="0">
-          <div class="np-date">
-            <span>${m}.${d}</span>
-            <span class="yr">${y}</span>
-          </div>
-          <div class="np-cat ${n.category}">${CATEGORIES[n.category] || ''}</div>
-          <h3 class="np-title">${n.title}</h3>
-          <div class="np-arrow" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </a>
-      `;
-    }).join('');
-  })();
+    if (!listEl) return;
+
+    // ★ ここにご自身のmicroCMSの「サービスドメイン」と「APIキー」を入力してください ★
+    const MICROCMS_DOMAIN = 'YOUR_DOMAIN'; // 例: 'hugmade-news'
+    const API_KEY = 'YOUR_API_KEY';
+
+    try {
+      const res = await fetch(`https://${MICROCMS_DOMAIN}.microcms.io/api/v1/news?limit=4`, {
+        headers: { 'X-MICROCMS-API-KEY': API_KEY }
+      });
+      
+      if (!res.ok) throw new Error('APIリクエストに失敗しました');
+      
+      const data = await res.json();
+      const items = data.contents;
+
+      const CATEGORIES = {
+        achievement: '事業実績',
+        event: 'イベント',
+        media: 'メディア',
+        notice: 'お知らせ'
+      };
+
+      // 取得したデータをHTMLに変換して流し込む
+      listEl.innerHTML = items.map(n => {
+        const dateObj = new Date(n.publishedAt || n.createdAt);
+        const y = dateObj.getFullYear();
+        const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const d = String(dateObj.getDate()).padStart(2, '0');
+        
+        // microCMSの仕様上、カテゴリが配列で返ってくる場合の対策
+        const catStr = (Array.isArray(n.category) && n.category.length > 0) ? n.category[0] : (n.category || 'notice');
+
+        return `
+          <a class="np-item" href="news.html" tabindex="0">
+            <div class="np-date">
+              <span>${m}.${d}</span>
+              <span class="yr">${y}</span>
+            </div>
+            <div class="np-cat ${catStr}">${CATEGORIES[catStr] || ''}</div>
+            <h3 class="np-title">${n.title}</h3>
+            <div class="np-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </a>
+        `;
+      }).join('');
+    } catch (err) {
+      console.error('ニュースの取得に失敗しました', err);
+      listEl.innerHTML = '<div style="padding:24px; color:var(--ink-500); font-size:13px;">お知らせを読み込めませんでした。</div>';
+    }
+  }
+
+  fetchNewsAndRender();
 </script>
+
 <script>
   // Nav scroll state
   const nav = document.getElementById('nav');
