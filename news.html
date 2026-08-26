@@ -272,7 +272,7 @@
     color: var(--ink-500);
     letter-spacing: 0.05em;
     line-height: 1.6;
-  }
+    }
   .news-date .yr {
     display: block;
     font-size: 11px;
@@ -574,27 +574,24 @@
   </div>
   <div class="wrap footer-bottom">
     © 2026 HUG-MADE Inc. All rights reserved.
-    <a href="admin.html" style="float:right;color:rgba(250,250,247,0.45);text-decoration:underline;margin-left:16px;">管理ツール</a>
   </div>
 </footer>
 
 <script>
   // ============ 状態管理 ============
-  let NEWS = []; // APIから取得したデータをここに格納
+  let NEWS = []; 
   const state = {
     filter: 'all',
     page: 1,
     perPage: 8
   };
 
-  // ============ 各DOM要素の取得 ============
   const listEl = document.getElementById('news-list');
   const emptyEl = document.getElementById('news-empty');
   const paginationEl = document.getElementById('pagination');
   const pageNumsEl = document.getElementById('page-nums');
   const totalNumEl = document.getElementById('total-num');
 
-  // 日付のフォーマット変換
   function formatDate(d) {
     const dateObj = new Date(d);
     const y = dateObj.getFullYear();
@@ -603,7 +600,6 @@
     return { y, md: `${m}.${day}` };
   }
 
-  // カテゴリラベルの変換
   function categoryLabel(c) {
     return {
       achievement: '事業実績',
@@ -613,7 +609,6 @@
     }[c] || '';
   }
 
-  // フィルタリング処理（作成日の新しい順でソート）
   function filtered() {
     const sorted = [...NEWS].sort((a, b) => new Date(b.publishedAt || b.createdAt) - new Date(a.publishedAt || a.createdAt));
     if (state.filter === 'all') return sorted;
@@ -623,7 +618,6 @@
     });
   }
 
-  // リストの描画処理
   function render() {
     const items = filtered();
     const totalPages = Math.max(1, Math.ceil(items.length / state.perPage));
@@ -655,11 +649,9 @@
       `;
     }).join('');
 
-    // 空の状態の表示切り替え
     emptyEl.classList.toggle('visible', items.length === 0);
     listEl.style.display = items.length === 0 ? 'none' : '';
 
-    // ページネーションの表示切り替え
     if (totalPages > 1) {
       paginationEl.hidden = false;
       pageNumsEl.innerHTML = Array.from({ length: totalPages }, (_, i) => {
@@ -673,7 +665,6 @@
     }
   }
 
-  // 件数の更新
   function updateCounts() {
     totalNumEl.textContent = NEWS.length;
     document.querySelector('[data-count="all"]').textContent = NEWS.length;
@@ -688,9 +679,9 @@
 
   // ============ microCMS からデータを取得 ============
   async function fetchNews() {
-    // ★ ここにご自身のmicroCMSの「サービスドメイン」と「APIキー」を入力してください ★
-    const MICROCMS_DOMAIN = 'YOUR_DOMAIN'; // 例: 'hugmade-news'
-    const API_KEY = 'YOUR_API_KEY';
+    // ★ サービスドメインとAPIキーを反映済みです ★
+    const MICROCMS_DOMAIN = 'hugmeid'; 
+    const API_KEY = '8uwainxJqQScCDcIlbtsMi8vMhtCZdTaPMEL';
 
     try {
       const res = await fetch(`https://${MICROCMS_DOMAIN}.microcms.io/api/v1/news?limit=100`, {
@@ -700,7 +691,7 @@
       if (!res.ok) throw new Error('APIリクエストに失敗しました');
       
       const data = await res.json();
-      NEWS = data.contents; // グローバル変数のNEWSに代入
+      NEWS = data.contents; 
       
       updateCounts();
       render();
@@ -759,7 +750,6 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // 最後にfetchNewsを実行してデータを取得・描画
   fetchNews();
 </script>
 
