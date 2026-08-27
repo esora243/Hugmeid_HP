@@ -4,10 +4,10 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>株式会社はぐめいど — 医学生の国際キャリアを、企業と共に創る。</title>
-<meta name="description" content="はぐめいどは、情報が届きにくいあらゆる場所に情報を届ける会社です。海外留学支援を入口に、将来の地域医療を支え...">
+<meta name="description" content="はぐめいどは、情報が届きにくいあらゆる場所に情報を届ける会社です。海外留学支援を入口に、将来の地域医療を支える医師を育てます。"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   /* ============ Design Tokens ============ */
   :root {
@@ -337,114 +337,1180 @@
     display: block;
   }
 
-  /* rest of CSS unchanged */
+  .story-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 8px;
+  }
+  .story-connector .eq {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 400;
+    color: var(--teal-600);
+    font-style: italic;
+  }
+  .story-connector .eq-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .story-synthesis {
+    margin-top: 64px;
+    padding: clamp(32px, 4vw, 56px);
+    background: var(--navy-900);
+    color: var(--paper);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(24px, 3vw, 40px);
+    align-items: center;
+  }
+  @media (max-width: 720px) {
+    .story-synthesis { grid-template-columns: 1fr; }
+  }
+  .story-synthesis .sy-mark {
+    width: 88px; height: 88px;
+    flex-shrink: 0;
+  }
+  .story-synthesis p {
+    font-family: var(--font-serif);
+    font-size: clamp(17px, 1.8vw, 21px);
+    line-height: 1.9;
+    margin: 0;
+    color: var(--paper);
+  }
+  .story-synthesis .kw {
+    color: var(--teal-500);
+    font-weight: 600;
+  }
+
+  /* ============ CEO ============ */
+  .ceo-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(40px, 6vw, 80px);
+    align-items: center;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  .ceo-photo {
+    aspect-ratio: 4 / 5;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .ceo-photo::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 12px,
+      rgba(10, 37, 64, 0.04) 12px,
+      rgba(10, 37, 64, 0.04) 13px
+    );
+  }
+  .ceo-photo-tag {
+    position: absolute;
+    left: 20px; bottom: 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    background: var(--paper);
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+  }
+  .ceo-photo-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-400);
+  }
+  .ceo-photo-icon svg { width: 60px; height: 60px; }
+
+  .ceo-body h3 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: clamp(22px, 2.4vw, 28px);
+    color: var(--navy-900);
+    margin: 0 0 8px;
+  }
+  .ceo-body .ceo-role {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--teal-600);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .ceo-quote {
+    font-family: var(--font-serif);
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 1.85;
+    color: var(--navy-900);
+    margin: 0 0 32px;
+    padding-left: 20px;
+    border-left: 2px solid var(--teal-600);
+    text-wrap: pretty;
+  }
+  .ceo-bio {
+    font-size: 15px;
+    color: var(--ink-700);
+    line-height: 1.95;
+    margin: 0 0 28px;
+  }
+  .ceo-meta {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 24px 0 0;
+    border-top: 1px solid var(--line);
+  }
+  .ceo-stat {
+    display: flex;
+    flex-direction: column;
+  }
+  .ceo-stat .num {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3vw, 36px);
+    font-weight: 500;
+    color: var(--navy-900);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .ceo-stat .lbl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* ============ Challenges ============ */
+  .challenges { background: var(--paper-2); }
+  .challenge-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 24px;
+  }
+  @media (max-width: 780px) {
+    .challenge-grid { grid-template-columns: 1fr; }
+  }
+  .challenge {
+    background: var(--paper);
+    padding: clamp(28px, 3vw, 40px);
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .challenge-icon {
+    width: 56px; height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--teal-100);
+    color: var(--teal-600);
+    border-radius: 12px;
+  }
+  .challenge h4 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--navy-900);
+    margin: 0;
+    line-height: 1.5;
+  }
+  .challenge p {
+    font-size: 15px;
+    color: var(--ink-700);
+    line-height: 1.9;
+    margin: 0;
+  }
+
+  .challenge-visual {
+    margin-top: 56px;
+    padding: clamp(32px, 4vw, 48px);
+    background: var(--paper);
+    border: 1px solid var(--line);
+  }
+  .cv-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .cv-bars {
+    display: grid;
+    grid-template-columns: 100px 1fr 60px;
+    gap: 16px;
+    align-items: center;
+  }
+  .cv-row { display: contents; }
+  .cv-row .lbl {
+    font-size: 14px;
+    color: var(--ink-700);
+    font-weight: 500;
+  }
+  .cv-track {
+    height: 10px;
+    background: var(--paper-2);
+    position: relative;
+    overflow: hidden;
+  }
+  .cv-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--navy-900);
+    width: 0;
+    transition: width 1.2s cubic-bezier(.2,.7,.2,1);
+  }
+  .cv-fill.short { background: var(--coral); }
+  .cv-val {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-700);
+    text-align: right;
+  }
+
+  /* ============ Mission ============ */
+  .mission {
+    background: var(--navy-900);
+    color: var(--paper);
+    padding: clamp(120px, 18vw, 200px) 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .mission::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(27, 167, 188, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(232, 115, 90, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .mission-inner {
+    position: relative;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .mission-tag {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--teal-500);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+  .mission-statement {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(32px, 6vw, 68px);
+    line-height: 1.5;
+    margin: 0 0 32px;
+    color: var(--paper);
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .mission-statement .em {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--teal-500);
+  }
+  .mission-desc {
+    font-size: 16px;
+    line-height: 2;
+    color: rgba(250, 250, 247, 0.75);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* ============ Services ============ */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .services-grid { grid-template-columns: 1fr; }
+  }
+  .service {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    transition: border-color .3s, transform .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service:hover {
+    border-color: var(--navy-900);
+    transform: translateY(-4px);
+  }
+  .service:hover .service-visual img {
+    transform: scale(1.04);
+  }
+  .service-body {
+    padding: clamp(24px, 2.5vw, 32px) clamp(24px, 2.5vw, 32px) clamp(28px, 3vw, 40px);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .service-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--ink-400);
+    margin-bottom: 20px;
+  }
+  .service-visual {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: var(--paper-2);
+  }
+  .service-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .service h4 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--navy-900);
+    margin: 0 0 16px;
+    line-height: 1.5;
+  }
+  .service p {
+    font-size: 14.5px;
+    color: var(--ink-700);
+    line-height: 1.9;
+    margin: 0 0 24px;
+  }
+  .service ul {
+    list-style: none;
+    padding: 0;
+    margin: auto 0 0;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+  .service ul li {
+    font-size: 13px;
+    color: var(--ink-700);
+    padding: 6px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .service ul li::before {
+    content: "";
+    width: 14px; height: 1px;
+    background: var(--teal-600);
+    margin-top: 12px;
+    flex-shrink: 0;
+  }
+
+  /* ============ Why Medical Students ============ */
+  .why { background: var(--paper-2); }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 24px;
+  }
+  @media (max-width: 820px) {
+    .why-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .why-grid { grid-template-columns: 1fr; }
+  }
+  .why-item {
+    background: var(--paper);
+    padding: clamp(28px, 3vw, 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 240px;
+  }
+  .why-icon {
+    color: var(--teal-600);
+    width: 40px; height: 40px;
+  }
+  .why-item h4 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--navy-900);
+    margin: 0;
+    line-height: 1.5;
+  }
+  .why-item p {
+    font-size: 14px;
+    color: var(--ink-700);
+    line-height: 1.85;
+    margin: 0;
+  }
+  .why-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--ink-400);
+    margin-bottom: -8px;
+  }
+
+  /* ============ Roadmap ============ */
+  .roadmap-wrap {
+    margin-top: 32px;
+    position: relative;
+  }
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  @media (max-width: 820px) {
+    .roadmap { grid-template-columns: 1fr; }
+  }
+  .rm-stage {
+    padding: clamp(28px, 3.5vw, 44px) clamp(24px, 3vw, 40px);
+    border: 1px solid var(--line);
+    background: var(--paper);
+    position: relative;
+    margin-right: -1px;
+  }
+  .rm-stage.now { background: var(--paper); }
+  .rm-stage.next { background: #F5F3ED; }
+  .rm-stage.vision {
+    background: var(--navy-900);
+    color: var(--paper);
+    border-color: var(--navy-900);
+  }
+  .rm-phase {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--teal-600);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .rm-stage.vision .rm-phase { color: var(--teal-500); }
+  .rm-phase .yr {
+    font-size: 10px;
+    color: var(--ink-400);
+    letter-spacing: 0.1em;
+  }
+  .rm-stage.vision .rm-phase .yr { color: rgba(250,250,247,0.5); }
+
+  .rm-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: clamp(20px, 2.4vw, 26px);
+    color: var(--navy-900);
+    line-height: 1.5;
+    margin: 0 0 12px;
+  }
+  .rm-stage.vision .rm-title { color: var(--paper); }
+
+  .rm-sub {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    color: var(--ink-500);
+    margin: 0 0 24px;
+    font-style: italic;
+  }
+  .rm-stage.vision .rm-sub { color: rgba(250,250,247,0.6); }
+
+  .rm-desc {
+    font-size: 14.5px;
+    color: var(--ink-700);
+    line-height: 1.9;
+    margin: 0;
+  }
+  .rm-stage.vision .rm-desc { color: rgba(250,250,247,0.85); }
+
+  .rm-icon {
+    width: 32px; height: 32px;
+    margin-bottom: 24px;
+    color: var(--teal-600);
+  }
+  .rm-stage.vision .rm-icon { color: var(--teal-500); }
+
+  .rm-thread {
+    margin-top: 40px;
+    padding: 24px;
+    background: var(--paper-2);
+    border: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  @media (max-width: 640px) { .rm-thread { flex-direction: column; text-align: center; } }
+  .rm-thread .rt-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--teal-600);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .rm-thread p {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    color: var(--navy-900);
+    line-height: 1.8;
+  }
+
+  /* ============ News (home preview) ============ */
+  .news-preview {
+    background: var(--paper-2);
+  }
+  .news-head-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+  .news-head-row .sec-head { margin-bottom: 0; }
+  .news-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    border: 1px solid var(--line-strong);
+    color: var(--navy-900);
+    border-radius: 999px;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    background: var(--paper);
+    transition: border-color .25s, background .25s, transform .25s, color .25s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .news-view-all:hover {
+    border-color: var(--navy-900);
+    background: var(--navy-900);
+    color: var(--paper);
+    transform: translateY(-2px);
+  }
+  .news-view-all svg { transition: transform .25s; }
+  .news-view-all:hover svg { transform: translateX(4px); }
+
+  .news-preview-list {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    border: 1px solid var(--line);
+  }
+  .np-item {
+    display: grid;
+    grid-template-columns: 130px 130px 1fr auto;
+    gap: clamp(16px, 3vw, 40px);
+    padding: 24px clamp(24px, 3vw, 36px);
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+    transition: background .2s;
+    cursor: pointer;
+  }
+  .np-item:last-child { border-bottom: none; }
+  .np-item:hover { background: rgba(10, 37, 64, 0.03); }
+  @media (max-width: 780px) {
+    .np-item {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 22px 20px;
+    }
+  }
+  .np-date {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-500);
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+  }
+  .np-date .yr {
+    display: block;
+    font-size: 11px;
+    color: var(--ink-400);
+  }
+  @media (max-width: 780px) {
+    .np-date { display: flex; align-items: baseline; gap: 10px; }
+    .np-date .yr { display: inline; }
+  }
+  .np-cat {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    justify-self: start;
+    align-self: center;
+    border: 1px solid;
+    line-height: 1.8;
+    white-space: nowrap;
+  }
+  .np-cat.achievement { color: var(--teal-600); border-color: var(--teal-600); background: var(--teal-100); }
+  .np-cat.event { color: var(--coral); border-color: var(--coral-soft); background: rgba(232, 115, 90, 0.08); }
+  .np-cat.media { color: var(--navy-700); border-color: var(--navy-500); background: rgba(30, 72, 116, 0.06); }
+  .np-cat.notice { color: var(--ink-700); border-color: var(--line-strong); background: var(--paper-2); }
+
+  .np-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: clamp(15px, 1.7vw, 17px);
+    color: var(--navy-900);
+    margin: 0;
+    line-height: 1.65;
+    letter-spacing: -0.005em;
+    text-wrap: pretty;
+    transition: color .2s;
+  }
+  .np-item:hover .np-title { color: var(--teal-600); }
+  .np-arrow {
+    color: var(--ink-400);
+    transition: transform .25s, color .2s;
+  }
+  .np-item:hover .np-arrow {
+    color: var(--teal-600);
+    transform: translateX(4px);
+  }
+  @media (max-width: 780px) { .np-arrow { display: none; } }
+
+  /* ============ Contact ============ */
+  .contact {
+    background: var(--paper-2);
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(40px, 6vw, 80px);
+  }
+  @media (max-width: 820px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .contact-info-item {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .contact-info-item:last-child { border-bottom: none; }
+  .cii-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .cii-value {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    color: var(--navy-900);
+    font-weight: 500;
+  }
+  .cii-value a { color: var(--teal-600); }
+  .cii-value a:hover { text-decoration: underline; }
+
+  .form {
+    background: var(--paper);
+    padding: clamp(28px, 3.5vw, 44px);
+    border: 1px solid var(--line);
+  }
+  .field {
+    margin-bottom: 24px;
+  }
+  .field label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .field label .req {
+    color: var(--coral);
+    margin-left: 4px;
+  }
+  .field input, .field textarea, .field select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    font: inherit;
+    color: var(--ink-900);
+    font-size: 15px;
+    transition: border-color .2s;
+    border-radius: 0;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: none;
+    border-color: var(--navy-900);
+  }
+  .field textarea { resize: vertical; min-height: 120px; }
+  .form button {
+    margin-top: 8px;
+    width: 100%;
+    padding: 18px;
+    background: var(--navy-900);
+    color: var(--paper);
+    border: none;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    transition: background .25s;
+  }
+  .form button:hover { background: var(--teal-600); }
+
+  /* ============ Footer ============ */
+  .footer {
+    background: var(--navy-900);
+    color: rgba(250,250,247,0.7);
+    padding: 60px 0 40px;
+    font-size: 13px;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .footer .brand {
+    color: var(--paper);
+  }
+  .footer-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(250,250,247,0.5);
+    text-transform: uppercase;
+  }
+  .footer-bottom {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(250,250,247,0.15);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(250,250,247,0.5);
+  }
+
+  /* ============ Fade-in animation ============ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
 </style>
 </head>
 <body>
-<nav class="nav">
+
+<!-- ================== NAV ================== -->
+<nav class="nav" id="nav">
   <div class="wrap nav-inner">
-    <div class="brand">
-      <div class="brand-mark"><img src="assets/brand-mark.svg" alt="Hugmeid"></div>
-      株式会社はぐめいど
-    </div>
+    <a href="#top" class="brand">
+      <span>株式会社はぐめいど</span>
+    </a>
     <div class="nav-links">
-      <a href="#services">サービス</a>
-      <a href="#story">相似形の格差</a>
-      <a href="#news">ニュース</a>
+      <a href="#story">Story</a>
+      <a href="#mission">Mission</a>
+      <a href="#services">Services</a>
+      <a href="#news">News</a>
+      <a href="#contact">Contact</a>
     </div>
-    <a class="nav-cta" href="#contact">お問い合わせ</a>
+    <a href="#contact" class="nav-cta">お問い合わせ</a>
   </div>
 </nav>
 
-<main>
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <div class="eyebrow">私たちについて</div>
-        <h1>医学生の国際キャリアを、企業と共に創る。</h1>
-        <p class="hero-sub">はぐめいどは、情報が届きにくい場所に情報を届けます。</p>
+<!-- ================== HERO ================== -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="reveal">
+        <h1>未来を創る<span class="accent">医師</span>を育む。</h1>
+        <p class="hero-sub">
+          <strong>国境を越える力は、地域を越える力になる。</strong><br>
+          株式会社はぐめいどは、海外留学支援を入口に、<br>
+          将来の地域医療を支える医師を育てています。
+        </p>
         <div class="hero-ctas">
-          <a class="btn-primary" href="#contact">相談する</a>
-          <a class="btn-ghost" href="#about">詳しく</a>
+          <a href="#contact" class="btn-primary">
+            スポンサー企業として参画する
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="#story" class="btn-ghost">私たちの、事業への想い</a>
         </div>
       </div>
-      <div class="hero-visual">
-        <img src="assets/hero-map.png" alt="map illustration">
+
+      <div class="hero-visual reveal">
+        <img src="assets/hero-map.png" alt="世界と日本をつなぐ地図イラスト"/>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="story">
-    <div class="wrap sec-head">
-      <div class="sec-tag">相似形の格差</div>
-      <h2 class="sec-title">地域ごとの情報格差を可視化する</h2>
+<!-- ================== STORY / SIMILARITY ================== -->
+<section class="story" id="story">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 class="sec-title" style="font-size: 26px">自分の地域から、一歩外に出ることで<br>初めて気づく学び。<br>ここから、医師としての豊かさを育みます。</h2>
+      <p class="sec-lede">
+        現役医学生は、10年後、20年後の医療を担う存在です。<strong>DX化が進み、人間としての価値が求められる現代だからこそ</strong>、患者に寄り添い、対話の中で本当に必要とされる医療を提供できる医師を育みます。
+      </p>
     </div>
 
-    <div class="wrap story-diagram">
-      <div class="story-card">
-        <div class="story-card-num">01</div>
-        <h3>都市部</h3>
-        <p>教育・情報が集中しています。</p>
+    <div class="story-diagram">
+      <!-- Card 1: Geographic -->
+      <div class="story-card reveal">
+        <div class="story-card-num">01 / DOMESTIC PERSPECTIVE</div>
+        <h3>地域から見える、<br>日本の医療のリアル。</h3>
+        <p>地域医療の現場に関わりながら、「医療の本質」について考えるきっかけを創ります。</p>
+        <div class="story-map">
+          <img src="assets/story-map-japan.png" alt="日本国内の情報密度地図（都市部集中）"/>
+        </div>
       </div>
 
-      <div class="story-connector">
-        <div class="eq">＝</div>
-        <div class="eq-label">比較</div>
+      <!-- Connector -->
+      <div class="story-connector reveal" aria-hidden="true">
+        <div class="eq">≈</div>
       </div>
 
-      <div class="story-card">
-        <div class="story-card-num">02</div>
-        <h3>地方</h3>
-        <p>情報が届きにくく、機会が限られます。</p>
+      <!-- Card 2: International -->
+      <div class="story-card reveal">
+        <div class="story-card-num">02 / GLOBAL PERSPECTIVE</div>
+        <h3>海外から俯瞰する、<br>日本の医療のリアル。</h3>
+        <p>日本の医療に貢献したい！と活躍する医師を増やすために、早期から日本の医療現場を客観視する機会を提供します。</p>
+        <div class="story-map">
+          <img src="assets/story-map-world.png" alt="世界の医療ネットワークと日本の地図"/>
+        </div>
       </div>
     </div>
 
-    <div class="wrap" style="margin-top:40px">
-      <div class="story-map">
-        <img src="assets/story-map-world.png" alt="world map">
+    <div class="story-synthesis reveal">
+      <p>
+        「国境を越える力」と「地域を越える力」に共通するのは、<span class="kw">適応力</span>です。<br>
+        医学生という早期段階から、異文化交流や多文化理解について学ぶきっかけを創ります。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================== CEO ================== -->
+<section class="ceo-section" id="ceo">
+  <div class="wrap">
+    <div class="ceo-grid">
+      <div class="ceo-body reveal">
+        <h3>株式会社はぐめいど 運営事務局</h3>
+        <blockquote class="ceo-quote">
+          「地方の医学生でも、日本、そして世界各国で<br>
+          活躍できる場を実現します。」
+        </blockquote>
+        <p class="ceo-bio">日本全国どこに居ても平等に情報を得ることのできるプラットフォームを構築し、医学生が「新しいことに挑戦する」ための情報インフラを構築します。</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="services">
-    <div class="wrap sec-head">
-      <div class="sec-tag">Services</div>
-      <h2 class="sec-title">提供サービス</h2>
+<!-- ================== MISSION ================== -->
+<section class="mission" id="mission">
+  <div class="wrap mission-inner reveal">
+    <div class="mission-tag">Mission & Vision — 03</div>
+    <h2 class="mission-statement">
+      国境を越える力は、<br><span class="em">地域を越える力</span>になる。
+    </h2>
+    <p class="mission-desc">はぐめいどのミッション。それは、日本全国どの地域に居ても、平等な医療を受けることのできる環境を創ることです。</p>
+  </div>
+</section>
+
+<!-- ================== SERVICES ================== -->
+<section class="services-section" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">What We Do — 04</div>
+      <h2 class="sec-title">情報格差の両側に、3つの橋を架ける。</h2>
+      <p class="sec-lede">オンラインのプラットフォーム事業や、対面のイベント事業を通して、地域医療に貢献する医師を育みます。</p>
     </div>
 
-    <div class="wrap services-grid">
-      <div class="service">
-        <div class="service-visual"><img src="assets/service-01-platform.jpg" alt="platform"></div>
+    <div class="services-grid">
+      <div class="service reveal">
+        <div class="service-visual" aria-hidden="true">
+          <img src="assets/service-01-platform.jpg" alt="大学カフェテリアでスマホを照らし合わせて医療情報を共有する3人の学生" loading="lazy" />
+        </div>
         <div class="service-body">
-          <div class="service-num">01</div>
-          <h4>Platform</h4>
-          <p>留学・キャリア支援プラットフォーム</p>
+          <div class="service-num">01 / PLATFORM</div>
+          <h4>プラットフォーム事業</h4>
+          <p>日本全国の医学生に、将来の理想のキャリアと、その実現のために必要な情報を発信する、オンライン事業を運営しています。</p>
         </div>
       </div>
 
-      <div class="service">
-        <div class="service-visual"><img src="assets/service-02-rural.jpg" alt="rural"></div>
+      <div class="service reveal">
+        <div class="service-visual" aria-hidden="true">
+          <img src="assets/service-02-rural.jpg" alt="地方の病院で地域住民と笑顔で話す医学生" loading="lazy" />
+        </div>
         <div class="service-body">
-          <div class="service-num">02</div>
-          <h4>Rural Support</h4>
-          <p>地域医療支援</p>
+          <div class="service-num">02 / RURAL PROGRAM</div>
+          <h4>地域医療留学プログラム</h4>
+          <p>「地方への適応」も"留学"と捉え直す、対面型のプログラムです。都市部と地方の医療情報格差を、実際に足を運べる仕組みで埋めていきます。</p>
         </div>
       </div>
 
-      <div class="service">
-        <div class="service-visual"><img src="assets/service-03-career.jpg" alt="career"></div>
+      <div class="service reveal">
+        <div class="service-visual" aria-hidden="true">
+          <img src="assets/service-03-career.jpg" alt="ワークショップで企業登壇者の話を聞き、仲間と討論する私服の医学生たち" loading="lazy" />
+        </div>
         <div class="service-body">
-          <div class="service-num">03</div>
-          <h4>Career</h4>
-          <p>国際キャリア支援</p>
+          <div class="service-num">03 / CAREER EVENTS</div>
+          <h4>医学生キャリア支援事業</h4>
+          <p>対面イベントを通じて、オンラインでは伝わりにくい「文脈」や「熱量」を届けます。企業と医学生の直接的な出会いの場を運営します。</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- footer and other content omitted for brevity -->
+<!-- ================== NEWS (Home Preview) ================== -->
+<section class="news-preview" id="news">
+  <div class="wrap">
+    <div class="news-head-row reveal">
+      <div class="sec-head" style="margin-bottom:0;">
+        <div class="sec-tag">News — 05</div>
+        <h2 class="sec-title">最新のお知らせ。</h2>
+        <p class="sec-lede">事業の進捗、イベント開催報告、メディア掲載などを随時お届けします。</p>
+      </div>
+      <a href="news.html" class="news-view-all">
+        すべてのお知らせを見る
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
 
-</main>
+    <div class="news-preview-list reveal" id="news-preview-list">
+      <!-- 取得中などに表示するスケルトン要素やテキスト -->
+      <div style="padding:24px; color:var(--ink-500); font-size: 13px;">ニュースを読み込んでいます...</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== CONTACT ================== -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">Contact — 06</div>
+      <h2 class="sec-title">私たちと共に、日本の医療を変えませんか。</h2>
+      <p class="sec-lede">
+事業連携などのお問い合わせはこちらから。担当より２営業日以内にご連絡いたします。
+      </p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="contact-info-item">
+          <div class="cii-label">Company</div>
+          <div class="cii-value">株式会社はぐめいど</div>
+        </div>
+        <div class="contact-info-item">
+          <div class="cii-label">Email</div>
+          <div class="cii-value"><a href="/cdn-cgi/l/email-protection#e48580898d8aa48a8193ca8c918389818d80ca878b89"><span class="__cf_email__" data-cfemail="650401080c0b250b00124b0d100208000c014b060a08">[email&#160;protected]</span></a></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="cii-label"></div>
+          <div class="cii-value" style="font-size:15px; color:var(--ink-700); font-family:var(--font-sans); font-weight:400; line-height:1.9;"></div>
+        </div>
+      </div>
+
+      <form class="form reveal" onsubmit="return handleContactSubmit(event)">
+        <div class="field">
+          <label for="name">お名前 <span class="req">*</span></label>
+          <input id="name" type="text" required>
+        </div>
+        <div class="field">
+          <label for="company">会社名／所属</label>
+          <input id="company" type="text">
+        </div>
+        <div class="field">
+          <label for="email">メールアドレス <span class="req">*</span></label>
+          <input id="email" type="email" required>
+        </div>
+        <div class="field">
+          <label for="topic">お問い合わせ種別</label>
+          <select id="topic">
+            <option>事業連携について</option>
+            <option>その他</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">内容 <span class="req">*</span></label>
+          <textarea id="message" required placeholder="ご相談の背景や目的があればお聞かせください。"></textarea>
+        </div>
+        <button type="submit">送信する →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================== FOOTER ================== -->
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <a href="#top" class="brand">
+        <span>株式会社はぐめいど</span>
+      </a>
+      <p style="margin-top:16px; max-width:400px; font-size:13px; line-height:1.85;">「未来を創る医師を育む。」を理念とした医学生向けキャリア支援事業</p>
+    </div>
+
+  </div>
+  <div class="wrap footer-bottom">
+    © 2026 HUG-MADE Inc. All rights reserved.
+    <a href="admin.html" style="float:right;color:rgba(250,250,247,0.45);text-decoration:underline;margin-left:16px;">管理ツール</a>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="contact.js"></script>
+
+<script>
+  // ============ Render news preview (latest 4) from microCMS ============
+  async function fetchNewsAndRender() {
+    const listEl = document.getElementById('news-preview-list');
+    if (!listEl) return;
+
+    // ★ サービスドメインとAPIキーを反映済みです ★
+    const MICROCMS_DOMAIN = 'hugmeid'; 
+    const API_KEY = '8uwainxJqQScCDcIlbtsMi8vMhtCZdTaPMEL';
+
+    try {
+      const res = await fetch(`https://${MICROCMS_DOMAIN}.microcms.io/api/v1/news?limit=4`, {
+        headers: { 'X-MICROCMS-API-KEY': API_KEY }
+      });
+      
+      if (!res.ok) throw new Error('APIリクエストに失敗しました');
+      
+      const data = await res.json();
+      const items = data.contents;
+
+      const CATEGORIES = {
+        achievement: '事業実績',
+        event: 'イベント',
+        media: 'メディア',
+        notice: 'お知らせ'
+      };
+
+      listEl.innerHTML = items.map(n => {
+        const dateObj = new Date(n.publishedAt || n.createdAt);
+        const y = dateObj.getFullYear();
+        const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const d = String(dateObj.getDate()).padStart(2, '0');
+        
+        const catStr = (Array.isArray(n.category) && n.category.length > 0) ? n.category[0] : (n.category || 'notice');
+
+        return `
+          <a class="np-item" href="news.html" tabindex="0">
+            <div class="np-date">
+              <span>${m}.${d}</span>
+              <span class="yr">${y}</span>
+            </div>
+            <div class="np-cat ${catStr}">${CATEGORIES[catStr] || ''}</div>
+            <h3 class="np-title">${n.title}</h3>
+            <div class="np-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </a>
+        `;
+      }).join('');
+    } catch (err) {
+      console.error('ニュースの取得に失敗しました', err);
+      listEl.innerHTML = '<div style="padding:24px; color:var(--ink-500); font-size:13px;">お知らせを読み込めませんでした。</div>';
+    }
+  }
+
+  fetchNewsAndRender();
+</script>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    if (window.scrollY > 20) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Animate challenge bars when in view
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.cv-fill').forEach(f => {
+          f.style.width = f.dataset.width;
+        });
+        barObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  const cv = document.querySelector('.challenge-visual');
+  if (cv) barObserver.observe(cv);
+</script>
 
 </body>
 </html>
