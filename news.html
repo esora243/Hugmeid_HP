@@ -272,7 +272,7 @@
     color: var(--ink-500);
     letter-spacing: 0.05em;
     line-height: 1.6;
-    }
+  }
   .news-date .yr {
     display: block;
     font-size: 11px;
@@ -533,8 +533,7 @@
 <section class="news-section">
   <div class="wrap">
     <div class="news-list" id="news-list">
-      <!-- 取得中などに表示するスケルトン要素やテキスト -->
-      <div style="padding:40px 20px; text-align:center; color:var(--ink-500);">ニュースを読み込んでいます...</div>
+      <!-- Rendered by JS -->
     </div>
     <div class="news-empty" id="news-empty">
       該当するお知らせはまだありません。
@@ -578,71 +577,42 @@
 </footer>
 
 <script src="news-data.js"></script>
-<script src="news-store.js"></script>
 <script>
-  let NEWS = [];
+  // ============ News data (shared from news-data.js) ============
+  const NEWS = window.HUGMADE_NEWS || [];
+
+  // ============ State ============
   const state = {
     filter: 'all',
     page: 1,
     perPage: 8
   };
 
+  // ============ Render ============
   const listEl = document.getElementById('news-list');
   const emptyEl = document.getElementById('news-empty');
   const paginationEl = document.getElementById('pagination');
   const pageNumsEl = document.getElementById('page-nums');
   const totalNumEl = document.getElementById('total-num');
 
-  const CATEGORIES = {
-    achievement: '事業実績',
-    event: 'イベント',
-    media: 'メディア',
-    notice: 'お知らせ'
-  };
-
-  function esc(value) {
-    return String(value == null ? '' : value)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
-
-  function normalizeCategory(value) {
-    return CATEGORIES[value] ? value : 'notice';
-  }
-
-  function formatDate(dateStr) {
-    const dateObj = new Date(dateStr);
-    if (Number.isNaN(dateObj.getTime())) return { y: '----', md: '--.--' };
-    const y = dateObj.getFullYear();
-    const m = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const day = String(dateObj.getDate()).padStart(2, '0');
+  function formatDate(d) {
+    const [y, m, day] = d.split('-');
     return { y, md: `${m}.${day}` };
   }
 
-  function getNews() {
-    try {
-      if (window.HugmadeNewsStore && typeof window.HugmadeNewsStore.getAll === 'function') {
-        return window.HugmadeNewsStore.getAll();
-      }
-    } catch (err) {
-      console.error('ニュース取得に失敗しました', err);
-    }
-    return Array.isArray(window.HUGMADE_NEWS) ? window.HUGMADE_NEWS.slice() : [];
-  }
-
-  function refreshNewsState() {
-    NEWS = getNews();
-    updateCounts();
-    render();
+  function categoryLabel(c) {
+    return {
+      achievement: '事業実績',
+      event: 'イベント',
+      media: 'メディア',
+      notice: 'お知らせ'
+    }[c] || '';
   }
 
   function filtered() {
-    const sorted = [...NEWS].sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+    const sorted = [...NEWS].sort((a, b) => b.date.localeCompare(a.date));
     if (state.filter === 'all') return sorted;
-    return sorted.filter(n => normalizeCategory(n.category) === state.filter);
+    return sorted.filter(n => n.category === state.filter);
   }
 
   function render() {
@@ -652,66 +622,55 @@
     const start = (state.page - 1) * state.perPage;
     const pageItems = items.slice(start, start + state.perPage);
 
-    if (!pageItems.length) {
-      listEl.innerHTML = '';
-    } else {
-      listEl.innerHTML = pageItems.map((n) => {
-        const { y, md } = formatDate(n.date);
-        const catStr = normalizeCategory(n.category);
-        return `
-          <article class="news-item" tabindex="0">
-            <div class="news-date">
-              <span>${esc(md)}</span>
-              <span class="yr">${esc(y)}</span>
-            </div>
-            <div class="news-cat ${esc(catStr)}">${esc(CATEGORIES[catStr])}</div>
-            <div class="news-body">
-              <h3 class="news-title">${esc(n.title)}</h3>
-              <p class="news-excerpt">${esc(n.excerpt || '')}</p>
-            </div>
-            <div class="news-arrow" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </article>
-        `;
-      }).join('');
-    }
+    listEl.innerHTML = pageItems.map((n) => {
+      const { y, md } = formatDate(n.date);
+      return `
+        <article class="news-item" tabindex="0">
+          <div class="news-date">
+            <span>${md}</span>
+            <span class="yr">${y}</span>
+          </div>
+          <div class="news-cat ${n.category}">${categoryLabel(n.category)}</div>
+          <div class="news-body">
+            <h3 class="news-title">${n.title}</h3>
+            <p class="news-excerpt">${n.excerpt}</p>
+          </div>
+          <div class="news-arrow" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </article>
+      `;
+    }).join('');
 
-    emptyEl.textContent = state.filter === 'all'
-      ? '該当するお知らせはまだありません。'
-      : 'このカテゴリのお知らせはまだありません。';
     emptyEl.classList.toggle('visible', items.length === 0);
     listEl.style.display = items.length === 0 ? 'none' : '';
 
+    // Pagination
     if (totalPages > 1) {
       paginationEl.hidden = false;
       pageNumsEl.innerHTML = Array.from({ length: totalPages }, (_, i) => {
         const p = i + 1;
         return `<button data-page="${p}" class="${p === state.page ? 'active' : ''}">${p}</button>`;
       }).join('');
-      const prevBtn = paginationEl.querySelector('[data-page="prev"]');
-      const nextBtn = paginationEl.querySelector('[data-page="next"]');
-      if (prevBtn) prevBtn.disabled = state.page === 1;
-      if (nextBtn) nextBtn.disabled = state.page === totalPages;
+      paginationEl.querySelector('[data-page="prev"]').disabled = state.page === 1;
+      paginationEl.querySelector('[data-page="next"]').disabled = state.page === totalPages;
     } else {
       paginationEl.hidden = true;
-      pageNumsEl.innerHTML = '';
     }
   }
 
   function updateCounts() {
     totalNumEl.textContent = NEWS.length;
-    const allCount = document.querySelector('[data-count="all"]');
-    if (allCount) allCount.textContent = NEWS.length;
+    document.querySelector('[data-count="all"]').textContent = NEWS.length;
     ['achievement', 'event', 'media', 'notice'].forEach(cat => {
-      const countEl = document.querySelector(`[data-count="${cat}"]`);
-      if (!countEl) return;
-      countEl.textContent = NEWS.filter(x => normalizeCategory(x.category) === cat).length;
+      const n = NEWS.filter(x => x.category === cat).length;
+      document.querySelector(`[data-count="${cat}"]`).textContent = n;
     });
   }
 
+  // ============ Events ============
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.filter-btn').forEach(b => {
@@ -720,7 +679,7 @@
       });
       btn.classList.add('active');
       btn.setAttribute('aria-selected', 'true');
-      state.filter = btn.dataset.filter || 'all';
+      state.filter = btn.dataset.filter;
       state.page = 1;
       render();
     });
@@ -733,24 +692,22 @@
     const totalPages = Math.max(1, Math.ceil(filtered().length / state.perPage));
     if (p === 'prev') state.page = Math.max(1, state.page - 1);
     else if (p === 'next') state.page = Math.min(totalPages, state.page + 1);
-    else {
-      const parsed = parseInt(p, 10);
-      state.page = Number.isNaN(parsed) ? 1 : parsed;
-    }
+    else state.page = parseInt(p, 10);
     render();
-    const section = document.querySelector('.news-section');
-    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Scroll to top of list
+    document.querySelector('.news-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
+  // Nav scroll state
   const nav = document.getElementById('nav');
   const onScroll = () => {
-    if (!nav) return;
     if (window.scrollY > 20) nav.classList.add('scrolled');
     else nav.classList.remove('scrolled');
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  // Reveal on scroll
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -761,13 +718,9 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  refreshNewsState();
-  window.addEventListener('storage', function (e) {
-    if (!e || e.key === 'hugmade_news') refreshNewsState();
-  });
-  window.addEventListener('pageshow', refreshNewsState);
-  window.addEventListener('focus', refreshNewsState);
-  window.addEventListener('hugmade-news-updated', refreshNewsState);
+  // Initial render
+  updateCounts();
+  render();
 </script>
 
 </body>

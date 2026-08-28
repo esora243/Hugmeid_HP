@@ -1190,11 +1190,8 @@
       </div>
 
       <div class="hero-visual reveal">
-<<<<<<< HEAD
-        <img src="assets/1.png" alt="世界と日本をつなぐ地図イラスト"/>
-=======
-        <img src="./test.png" alt="世界と日本をつなぐ地図イラスト"/>
->>>>>>> 068118e7105b1350a37c01ee1c5745d2ec9cf8fc
+        <img src="assets/hero-map.png" alt="世界と日本をつなぐ地図イラスト"/>
+        <!-- illustrated map replaces prior SVG -->
       </div>
     </div>
   </div>
@@ -1217,7 +1214,7 @@
         <h3>地域から見える、<br>日本の医療のリアル。</h3>
         <p>地域医療の現場に関わりながら、「医療の本質」について考えるきっかけを創ります。</p>
         <div class="story-map">
-          <img src="2.png" alt="日本国内の情報密度地図（都市部集中）"/>
+          <img src="assets/story-map-japan.png" alt="日本国内の情報密度地図（都市部集中）"/>
         </div>
       </div>
 
@@ -1232,7 +1229,7 @@
         <h3>海外から俯瞰する、<br>日本の医療のリアル。</h3>
         <p>日本の医療に貢献したい！と活躍する医師を増やすために、早期から日本の医療現場を客観視する機会を提供します。</p>
         <div class="story-map">
-          <img src="3.png" alt="世界の医療ネットワークと日本の地図"/>
+          <img src="assets/story-map-world.png" alt="世界の医療ネットワークと日本の地図"/>
         </div>
       </div>
     </div>
@@ -1251,7 +1248,7 @@
   <div class="wrap">
     <div class="ceo-grid">
       <div class="ceo-body reveal">
-        <h3>株式会社はぐめいど 運営事務局</h3>
+        <h3>株式会社はぐめいど　運営事務局</h3>
         <blockquote class="ceo-quote">
           「地方の医学生でも、日本、そして世界各国で<br>
           活躍できる場を実現します。」
@@ -1285,7 +1282,7 @@
     <div class="services-grid">
       <div class="service reveal">
         <div class="service-visual" aria-hidden="true">
-          <img src="4.jpg" alt="大学カフェテリアでスマホを照らし合わせて医療情報を共有する3人の学生" loading="lazy" />
+          <img src="assets/service-01-platform.jpg" alt="大学カフェテリアでスマホを照らし合わせて医療情報を共有する3人の学生" loading="lazy" />
         </div>
         <div class="service-body">
           <div class="service-num">01 / PLATFORM</div>
@@ -1296,7 +1293,7 @@
 
       <div class="service reveal">
         <div class="service-visual" aria-hidden="true">
-          <img src="5.jpg" alt="地方の病院で地域住民と笑顔で話す医学生" loading="lazy" />
+          <img src="assets/service-02-rural.jpg" alt="地方の病院で地域住民と笑顔で話す医学生" loading="lazy" />
         </div>
         <div class="service-body">
           <div class="service-num">02 / RURAL PROGRAM</div>
@@ -1307,7 +1304,7 @@
 
       <div class="service reveal">
         <div class="service-visual" aria-hidden="true">
-          <img src="6.jpg" alt="ワークショップで企業登壇者の話を聞き、仲間と討論する私服の医学生たち" loading="lazy" />
+          <img src="assets/service-03-career.jpg" alt="ワークショップで企業登壇者の話を聞き、仲間と討論する私服の医学生たち" loading="lazy" />
         </div>
         <div class="service-body">
           <div class="service-num">03 / CAREER EVENTS</div>
@@ -1337,8 +1334,7 @@
     </div>
 
     <div class="news-preview-list reveal" id="news-preview-list">
-      <!-- 取得中などに表示するスケルトン要素やテキスト -->
-      <div style="padding:24px; color:var(--ink-500); font-size: 13px;">ニュースを読み込んでいます...</div>
+      <!-- Rendered by JS from news-data.js -->
     </div>
   </div>
 </section>
@@ -1370,7 +1366,7 @@
         </div>
       </div>
 
-      <form class="form reveal" onsubmit="return handleContactSubmit(event)">
+      <form class="form reveal" onsubmit="event.preventDefault(); alert('お問い合わせありがとうございます。担当より2営業日以内にご連絡いたします。');">
         <div class="field">
           <label for="name">お名前 <span class="req">*</span></label>
           <input id="name" type="text" required>
@@ -1413,104 +1409,44 @@
   </div>
   <div class="wrap footer-bottom">
     © 2026 HUG-MADE Inc. All rights reserved.
-    <a href="admin.html" style="float:right;color:rgba(250,250,247,0.45);text-decoration:underline;margin-left:16px;">管理ツール</a>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-<script src="contact.js"></script>
-<script src="news-data.js"></script>
-<script src="news-store.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="news-data.js"></script>
 <script>
-  (function () {
+  // ============ Render news preview (latest 4) ============
+  (function renderNewsPreview() {
     const listEl = document.getElementById('news-preview-list');
-    if (!listEl) return;
-
+    if (!listEl || !window.HUGMADE_NEWS) return;
     const CATEGORIES = {
       achievement: '事業実績',
       event: 'イベント',
       media: 'メディア',
       notice: 'お知らせ'
     };
-
-    function esc(value) {
-      return String(value == null ? '' : value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    function normalizeCategory(value) {
-      return CATEGORIES[value] ? value : 'notice';
-    }
-
-    function formatDate(dateStr) {
-      const dateObj = new Date(dateStr);
-      if (Number.isNaN(dateObj.getTime())) {
-        return { y: '----', m: '--', d: '--' };
-      }
-      return {
-        y: String(dateObj.getFullYear()),
-        m: String(dateObj.getMonth() + 1).padStart(2, '0'),
-        d: String(dateObj.getDate()).padStart(2, '0')
-      };
-    }
-
-    function getNews() {
-      try {
-        if (window.HugmadeNewsStore && typeof window.HugmadeNewsStore.getAll === 'function') {
-          return window.HugmadeNewsStore.getAll();
-        }
-      } catch (err) {
-        console.error('ニュース取得に失敗しました', err);
-      }
-      return Array.isArray(window.HUGMADE_NEWS) ? window.HUGMADE_NEWS.slice() : [];
-    }
-
-    function sortedNews() {
-      return getNews().sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
-    }
-
-    function renderNewsPreview() {
-      const items = sortedNews().slice(0, 4);
-      if (!items.length) {
-        listEl.innerHTML = '<div style="padding:24px; color:var(--ink-500); font-size:13px;">まだお知らせはありません。</div>';
-        return;
-      }
-
-      listEl.innerHTML = items.map((n) => {
-        const { y, m, d } = formatDate(n.date);
-        const catStr = normalizeCategory(n.category);
-        return `
-          <a class="np-item" href="news.html" tabindex="0">
-            <div class="np-date">
-              <span>${esc(m)}.${esc(d)}</span>
-              <span class="yr">${esc(y)}</span>
-            </div>
-            <div class="np-cat ${esc(catStr)}">${esc(CATEGORIES[catStr])}</div>
-            <h3 class="np-title">${esc(n.title)}</h3>
-            <div class="np-arrow" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </a>
-        `;
-      }).join('');
-    }
-
-    renderNewsPreview();
-    window.addEventListener('storage', function (e) {
-      if (!e || e.key === 'hugmade_news') renderNewsPreview();
-    });
-    window.addEventListener('pageshow', renderNewsPreview);
-    window.addEventListener('focus', renderNewsPreview);
-    window.addEventListener('hugmade-news-updated', renderNewsPreview);
+    const items = [...window.HUGMADE_NEWS]
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .slice(0, 4);
+    listEl.innerHTML = items.map(n => {
+      const [y, m, d] = n.date.split('-');
+      return `
+        <a class="np-item" href="news.html" tabindex="0">
+          <div class="np-date">
+            <span>${m}.${d}</span>
+            <span class="yr">${y}</span>
+          </div>
+          <div class="np-cat ${n.category}">${CATEGORIES[n.category] || ''}</div>
+          <h3 class="np-title">${n.title}</h3>
+          <div class="np-arrow" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+      `;
+    }).join('');
   })();
 </script>
-
 <script>
   // Nav scroll state
   const nav = document.getElementById('nav');
