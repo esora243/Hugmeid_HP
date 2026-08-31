@@ -40,3 +40,5 @@
 *.woff2 filter=lfs diff=lfs merge=lfs -text
 *.xz filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
+assets/story-map-japan.png filter=lfs diff=lfs merge=lfs -text
+assets/service-01-platform.jpg filter=lfs diff=lfs merge=lfs -text
