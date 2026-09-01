@@ -272,7 +272,7 @@
     color: var(--ink-500);
     letter-spacing: 0.05em;
     line-height: 1.6;
-  }
+    }
   .news-date .yr {
     display: block;
     font-size: 11px;
@@ -533,7 +533,8 @@
 <section class="news-section">
   <div class="wrap">
     <div class="news-list" id="news-list">
-      <!-- Rendered by JS -->
+      <!-- 取得中などに表示するスケルトン要素やテキスト -->
+      <div style="padding:40px 20px; text-align:center; color:var(--ink-500);">ニュースを読み込んでいます...</div>
     </div>
     <div class="news-empty" id="news-empty">
       該当するお知らせはまだありません。
@@ -576,19 +577,15 @@
   </div>
 </footer>
 
-<script src="news-data.js"></script>
 <script>
-  // ============ News data (shared from news-data.js) ============
-  const NEWS = window.HUGMADE_NEWS || [];
-
-  // ============ State ============
+  // ============ 状態管理 ============
+  let NEWS = []; 
   const state = {
     filter: 'all',
     page: 1,
     perPage: 8
   };
 
-  // ============ Render ============
   const listEl = document.getElementById('news-list');
   const emptyEl = document.getElementById('news-empty');
   const paginationEl = document.getElementById('pagination');
@@ -596,7 +593,10 @@
   const totalNumEl = document.getElementById('total-num');
 
   function formatDate(d) {
-    const [y, m, day] = d.split('-');
+    const dateObj = new Date(d);
+    const y = dateObj.getFullYear();
+    const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
     return { y, md: `${m}.${day}` };
   }
 
@@ -610,9 +610,12 @@
   }
 
   function filtered() {
-    const sorted = [...NEWS].sort((a, b) => b.date.localeCompare(a.date));
+    const sorted = [...NEWS].sort((a, b) => new Date(b.publishedAt || b.createdAt) - new Date(a.publishedAt || a.createdAt));
     if (state.filter === 'all') return sorted;
-    return sorted.filter(n => n.category === state.filter);
+    return sorted.filter(n => {
+      const catStr = (Array.isArray(n.category) && n.category.length > 0) ? n.category[0] : (n.category || 'notice');
+      return catStr === state.filter;
+    });
   }
 
   function render() {
@@ -623,17 +626,19 @@
     const pageItems = items.slice(start, start + state.perPage);
 
     listEl.innerHTML = pageItems.map((n) => {
-      const { y, md } = formatDate(n.date);
+      const { y, md } = formatDate(n.publishedAt || n.createdAt);
+      const catStr = (Array.isArray(n.category) && n.category.length > 0) ? n.category[0] : (n.category || 'notice');
+
       return `
         <article class="news-item" tabindex="0">
           <div class="news-date">
             <span>${md}</span>
             <span class="yr">${y}</span>
           </div>
-          <div class="news-cat ${n.category}">${categoryLabel(n.category)}</div>
+          <div class="news-cat ${catStr}">${categoryLabel(catStr)}</div>
           <div class="news-body">
             <h3 class="news-title">${n.title}</h3>
-            <p class="news-excerpt">${n.excerpt}</p>
+            <p class="news-excerpt">${n.excerpt || ''}</p>
           </div>
           <div class="news-arrow" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -647,7 +652,6 @@
     emptyEl.classList.toggle('visible', items.length === 0);
     listEl.style.display = items.length === 0 ? 'none' : '';
 
-    // Pagination
     if (totalPages > 1) {
       paginationEl.hidden = false;
       pageNumsEl.innerHTML = Array.from({ length: totalPages }, (_, i) => {
@@ -665,12 +669,41 @@
     totalNumEl.textContent = NEWS.length;
     document.querySelector('[data-count="all"]').textContent = NEWS.length;
     ['achievement', 'event', 'media', 'notice'].forEach(cat => {
-      const n = NEWS.filter(x => x.category === cat).length;
+      const n = NEWS.filter(x => {
+          const catStr = (Array.isArray(x.category) && x.category.length > 0) ? x.category[0] : (x.category || 'notice');
+          return catStr === cat;
+      }).length;
       document.querySelector(`[data-count="${cat}"]`).textContent = n;
     });
   }
 
-  // ============ Events ============
+  // ============ microCMS からデータを取得 ============
+  async function fetchNews() {
+    // ★ サービスドメインとAPIキーを反映済みです ★
+    const MICROCMS_DOMAIN = 'hugmeid'; 
+    const API_KEY = '8uwainxJqQScCDcIlbtsMi8vMhtCZdTaPMEL';
+
+    try {
+      const res = await fetch(`https://${MICROCMS_DOMAIN}.microcms.io/api/v1/news?limit=100`, {
+        headers: { 'X-MICROCMS-API-KEY': API_KEY }
+      });
+      
+      if (!res.ok) throw new Error('APIリクエストに失敗しました');
+      
+      const data = await res.json();
+      NEWS = data.contents; 
+      
+      updateCounts();
+      render();
+    } catch (err) {
+      console.error('ニュースの取得に失敗しました', err);
+      listEl.innerHTML = '';
+      emptyEl.textContent = 'お知らせを読み込めませんでした。時間をおいて再読み込みしてください。';
+      emptyEl.classList.add('visible');
+    }
+  }
+
+  // ============ イベントリスナー ============
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.filter-btn').forEach(b => {
@@ -694,7 +727,6 @@
     else if (p === 'next') state.page = Math.min(totalPages, state.page + 1);
     else state.page = parseInt(p, 10);
     render();
-    // Scroll to top of list
     document.querySelector('.news-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
@@ -718,9 +750,7 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // Initial render
-  updateCounts();
-  render();
+  fetchNews();
 </script>
 
 </body>

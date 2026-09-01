@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="placeholder image">
+  <rect width="1200" height="800" fill="#FAFAF7"/>
+  <rect x="40" y="40" width="1120" height="720" rx="28" fill="#F2F0EA" stroke="#0A2540" stroke-width="4"/>
+  <g fill="none" stroke="#1BA7BC" stroke-width="10" stroke-linecap="round">
+    <path d="M180 560 C300 420, 420 420, 540 560"/>
+    <path d="M540 560 C660 420, 780 420, 900 560"/>
+  </g>
+  <circle cx="340" cy="320" r="76" fill="#0891A6" opacity="0.18"/>
+  <circle cx="860" cy="320" r="76" fill="#E8735A" opacity="0.18"/>
+  <text x="90" y="110" font-family="Arial, Helvetica, sans-serif" font-size="34" fill="#0891A6">HUG-MADE / FALLBACK</text>
+  <text x="90" y="660" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700" fill="#0A2540">Image unavailable</text>
+  <text x="90" y="720" font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#143559">This placeholder is shown automatically when an image file fails to load.</text>
+</svg>

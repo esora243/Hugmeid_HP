@@ -1191,7 +1191,6 @@
 
       <div class="hero-visual reveal">
         <img src="assets/hero-map.png" alt="世界と日本をつなぐ地図イラスト"/>
-        <!-- illustrated map replaces prior SVG -->
       </div>
     </div>
   </div>
@@ -1248,7 +1247,7 @@
   <div class="wrap">
     <div class="ceo-grid">
       <div class="ceo-body reveal">
-        <h3>株式会社はぐめいど　運営事務局</h3>
+        <h3>株式会社はぐめいど 運営事務局</h3>
         <blockquote class="ceo-quote">
           「地方の医学生でも、日本、そして世界各国で<br>
           活躍できる場を実現します。」
@@ -1334,7 +1333,8 @@
     </div>
 
     <div class="news-preview-list reveal" id="news-preview-list">
-      <!-- Rendered by JS from news-data.js -->
+      <!-- 取得中などに表示するスケルトン要素やテキスト -->
+      <div style="padding:24px; color:var(--ink-500); font-size: 13px;">ニュースを読み込んでいます...</div>
     </div>
   </div>
 </section>
@@ -1366,7 +1366,7 @@
         </div>
       </div>
 
-      <form class="form reveal" onsubmit="event.preventDefault(); alert('お問い合わせありがとうございます。担当より2営業日以内にご連絡いたします。');">
+      <form class="form reveal" onsubmit="return handleContactSubmit(event)">
         <div class="field">
           <label for="name">お名前 <span class="req">*</span></label>
           <input id="name" type="text" required>
@@ -1409,44 +1409,73 @@
   </div>
   <div class="wrap footer-bottom">
     © 2026 HUG-MADE Inc. All rights reserved.
+    <a href="admin.html" style="float:right;color:rgba(250,250,247,0.45);text-decoration:underline;margin-left:16px;">管理ツール</a>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="news-data.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="contact.js"></script>
+
 <script>
-  // ============ Render news preview (latest 4) ============
-  (function renderNewsPreview() {
+  // ============ Render news preview (latest 4) from microCMS ============
+  async function fetchNewsAndRender() {
     const listEl = document.getElementById('news-preview-list');
-    if (!listEl || !window.HUGMADE_NEWS) return;
-    const CATEGORIES = {
-      achievement: '事業実績',
-      event: 'イベント',
-      media: 'メディア',
-      notice: 'お知らせ'
-    };
-    const items = [...window.HUGMADE_NEWS]
-      .sort((a, b) => b.date.localeCompare(a.date))
-      .slice(0, 4);
-    listEl.innerHTML = items.map(n => {
-      const [y, m, d] = n.date.split('-');
-      return `
-        <a class="np-item" href="news.html" tabindex="0">
-          <div class="np-date">
-            <span>${m}.${d}</span>
-            <span class="yr">${y}</span>
-          </div>
-          <div class="np-cat ${n.category}">${CATEGORIES[n.category] || ''}</div>
-          <h3 class="np-title">${n.title}</h3>
-          <div class="np-arrow" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </a>
-      `;
-    }).join('');
-  })();
+    if (!listEl) return;
+
+    // ★ サービスドメインとAPIキーを反映済みです ★
+    const MICROCMS_DOMAIN = 'hugmeid'; 
+    const API_KEY = '8uwainxJqQScCDcIlbtsMi8vMhtCZdTaPMEL';
+
+    try {
+      const res = await fetch(`https://${MICROCMS_DOMAIN}.microcms.io/api/v1/news?limit=4`, {
+        headers: { 'X-MICROCMS-API-KEY': API_KEY }
+      });
+      
+      if (!res.ok) throw new Error('APIリクエストに失敗しました');
+      
+      const data = await res.json();
+      const items = data.contents;
+
+      const CATEGORIES = {
+        achievement: '事業実績',
+        event: 'イベント',
+        media: 'メディア',
+        notice: 'お知らせ'
+      };
+
+      listEl.innerHTML = items.map(n => {
+        const dateObj = new Date(n.publishedAt || n.createdAt);
+        const y = dateObj.getFullYear();
+        const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const d = String(dateObj.getDate()).padStart(2, '0');
+        
+        const catStr = (Array.isArray(n.category) && n.category.length > 0) ? n.category[0] : (n.category || 'notice');
+
+        return `
+          <a class="np-item" href="news.html" tabindex="0">
+            <div class="np-date">
+              <span>${m}.${d}</span>
+              <span class="yr">${y}</span>
+            </div>
+            <div class="np-cat ${catStr}">${CATEGORIES[catStr] || ''}</div>
+            <h3 class="np-title">${n.title}</h3>
+            <div class="np-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </a>
+        `;
+      }).join('');
+    } catch (err) {
+      console.error('ニュースの取得に失敗しました', err);
+      listEl.innerHTML = '<div style="padding:24px; color:var(--ink-500); font-size:13px;">お知らせを読み込めませんでした。</div>';
+    }
+  }
+
+  fetchNewsAndRender();
 </script>
+
 <script>
   // Nav scroll state
   const nav = document.getElementById('nav');
@@ -1483,5 +1512,23 @@
   if (cv) barObserver.observe(cv);
 </script>
 
+
+<script>
+  window.hugmeidFallbackImage = function(img) {
+    const fallback = 'assets/fallback-placeholder.svg';
+    if (!img || img.dataset.fallbackApplied === '1') return;
+    img.dataset.fallbackApplied = '1';
+    img.src = fallback;
+    img.style.objectFit = img.closest('.hero-visual') ? 'contain' : 'cover';
+    if (!img.alt) img.alt = 'placeholder image';
+  };
+
+  document.querySelectorAll('img').forEach((img) => {
+    img.addEventListener('error', function() { window.hugmeidFallbackImage(img); });
+    if (img.complete && (!img.naturalWidth || !img.naturalHeight)) {
+      window.hugmeidFallbackImage(img);
+    }
+  });
+</script>
 </body>
 </html>
