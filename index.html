@@ -1512,23 +1512,5 @@
   if (cv) barObserver.observe(cv);
 </script>
 
-
-<script>
-  window.hugmeidFallbackImage = function(img) {
-    const fallback = 'assets/fallback-placeholder.svg';
-    if (!img || img.dataset.fallbackApplied === '1') return;
-    img.dataset.fallbackApplied = '1';
-    img.src = fallback;
-    img.style.objectFit = img.closest('.hero-visual') ? 'contain' : 'cover';
-    if (!img.alt) img.alt = 'placeholder image';
-  };
-
-  document.querySelectorAll('img').forEach((img) => {
-    img.addEventListener('error', function() { window.hugmeidFallbackImage(img); });
-    if (img.complete && (!img.naturalWidth || !img.naturalHeight)) {
-      window.hugmeidFallbackImage(img);
-    }
-  });
-</script>
 </body>
 </html>
