@@ -113,8 +113,8 @@
   <!-- ===== 新着記事管理 ===== -->
   <section class="adm-panel active" id="panel-articles">
     <p class="adm-note" style="margin-top:0">
-      記事の追加・編集・削除はこのブラウザの <code>localStorage</code> に保存され、そのままサイト表示（index.html / news.html）へ即時反映されます。<br/>
-      別のブラウザや本番サーバーへ反映する場合は、下の「<b>news-data.js を書き出す</b>」でファイルをダウンロードし、<code>news-data.js</code> と差し替えてください。
+      記事の追加・編集・削除はこのブラウザの <code>localStorage</code> に保存され、サイト表示（index.html / news.html）へ即時反映されます。<br/>
+      別のブラウザや本番サーバーへ反映する場合は、下の「<b>microCMS に同期する</b>」で microCMS へ反映するか、「<b>news-data.js を書き出す</b>」でファイルを差し替えてください。
     </p>
     <div class="adm-grid">
       <div class="adm-card">
@@ -162,6 +162,7 @@
         <button class="adm-btn ghost" id="adm-export-json">JSON を書き出す</button>
         <button class="adm-btn ghost" id="adm-import-json">JSON を読み込む</button>
         <input type="file" id="adm-import-file" accept=".json,application/json" hidden/>
+        <button class="adm-btn" id="adm-mc-sync">microCMS に同期する</button>
         <button class="adm-btn danger" id="adm-reset">初期データに戻す</button>
       </div>
     </div>
@@ -207,7 +208,7 @@
   'use strict';
 
   // ---- 簡易ロック（必要に応じて変更） ----
-  var ADMIN_PIN = 'hugmade';
+  var ADMIN_PIN = 'hugmeidmai1129';
   var PIN_KEY = 'hugmade_admin_unlocked';
 
   var CATS = { achievement: '事業実績', event: 'イベント', media: 'メディア', notice: 'お知らせ' };
@@ -218,6 +219,7 @@
     return saved || window.HugmadeNewsStore.defaults();
   }
   function saveNews(arr) {
+    ensureKeys(arr);
     window.HugmadeNewsStore.save(arr);
     renderNews();
   }
@@ -344,9 +346,20 @@
     }
     if (delBtn) {
       var j = parseInt(delBtn.getAttribute('data-del'), 10);
-      if (!window.confirm('この記事を削除しますか？\n' + (arr[j] ? arr[j].title : ''))) return;
+      var removed = arr[j];
+      if (!window.confirm('この記事を削除しますか？\n' + (removed ? removed.title : ''))) return;
       arr.splice(j, 1);
       saveNews(arr);
+      // microCMS にも反映（同期済みの記事のみ）
+      if (removed && removed._key) {
+        var map = getMcMap();
+        var mcId = map[removed._key];
+        if (mcId) {
+          fetch(MC_ENDPOINT + '/' + mcId, { method: 'DELETE', headers: { 'X-MICROCMS-API-KEY': MC_API_KEY } })
+            .then(function (r) { if (r.ok) { delete map[removed._key]; saveMcMap(map); } })
+            .catch(function () {});
+        }
+      }
       toast('記事を削除しました。');
       if (editingIndex !== null) resetForm();
     }
@@ -391,6 +404,58 @@
     renderNews();
     resetForm();
     toast('初期データに戻しました。');
+  });
+
+  // ================= microCMS 連携 =================
+  // microCMS のコンテンツAPI「news」に記事を反映します。
+  // 事前に microCMS 管理画面で API「news」を作成し、
+  // フィールド date / category / title / excerpt を用意してください。
+  var MC_DOMAIN = 'hugmeid';
+  var MC_API_KEY = '8uwainxJqQScCDcIlbtsMi8vMhtCZdTaPMEL';
+  var MC_ENDPOINT = 'https://' + MC_DOMAIN + '.microcms.io/api/v1/news';
+  var MC_MAP_KEY = 'hugmade_news_mcids';
+
+  function getMcMap() {
+    try { var m = JSON.parse(localStorage.getItem(MC_MAP_KEY) || '{}'); return (m && typeof m === 'object') ? m : {}; } catch (e) { return {}; }
+  }
+  function saveMcMap(m) { localStorage.setItem(MC_MAP_KEY, JSON.stringify(m)); }
+  function ensureKeys(arr) {
+    arr.forEach(function (n) {
+      if (!n._key) n._key = 'k' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    });
+    return arr;
+  }
+
+  document.getElementById('adm-mc-sync').addEventListener('click', function () {
+    var arr = sortedNews(getNews());
+    if (!arr.length) { toast('同期する記事がありません。'); return; }
+    var map = getMcMap();
+    var total = arr.length, ok = 0, fail = 0;
+    function finish() {
+      if (ok + fail >= total) {
+        saveMcMap(map);
+        saveNews(arr);
+        toast(fail === 0
+          ? 'microCMSに' + ok + '件を反映しました。'
+          : '反映: 成功' + ok + '件 / 失敗' + fail + '件。microCMS管理画面でAPI「news」が作成済みか確認してください。');
+      }
+    }
+    arr.forEach(function (n) {
+      if (!n._key) n._key = 'k' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+      var mcId = map[n._key];
+      var url = MC_ENDPOINT + (mcId ? '/' + mcId : '');
+      fetch(url, {
+        method: mcId ? 'PATCH' : 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-MICROCMS-API-KEY': MC_API_KEY },
+        body: JSON.stringify({ date: n.date, category: n.category, title: n.title, excerpt: n.excerpt })
+      }).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      }).then(function (data) {
+        if (data && data.id) map[n._key] = data.id;
+        ok++; finish();
+      }).catch(function () { fail++; finish(); });
+    });
   });
 
   // ================= 問い合わせ受信箱 =================

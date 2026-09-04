@@ -577,6 +577,9 @@
   </div>
 </footer>
 
+<script src="news-data.js"></script>
+<script src="news-store.js"></script>
+<script src="news-loader.js"></script>
 <script>
   // ============ 状態管理 ============
   let NEWS = []; 
@@ -610,10 +613,10 @@
   }
 
   function filtered() {
-    const sorted = [...NEWS].sort((a, b) => new Date(b.publishedAt || b.createdAt) - new Date(a.publishedAt || a.createdAt));
+    const sorted = [...NEWS].sort((a, b) => String(b.date).localeCompare(String(a.date)));
     if (state.filter === 'all') return sorted;
     return sorted.filter(n => {
-      const catStr = (Array.isArray(n.category) && n.category.length > 0) ? n.category[0] : (n.category || 'notice');
+      const catStr = n.category || 'notice';
       return catStr === state.filter;
     });
   }
@@ -626,8 +629,8 @@
     const pageItems = items.slice(start, start + state.perPage);
 
     listEl.innerHTML = pageItems.map((n) => {
-      const { y, md } = formatDate(n.publishedAt || n.createdAt);
-      const catStr = (Array.isArray(n.category) && n.category.length > 0) ? n.category[0] : (n.category || 'notice');
+      const { y, md } = formatDate(n.date);
+      const catStr = n.category || 'notice';
 
       return `
         <article class="news-item" tabindex="0">
@@ -669,38 +672,18 @@
     totalNumEl.textContent = NEWS.length;
     document.querySelector('[data-count="all"]').textContent = NEWS.length;
     ['achievement', 'event', 'media', 'notice'].forEach(cat => {
-      const n = NEWS.filter(x => {
-          const catStr = (Array.isArray(x.category) && x.category.length > 0) ? x.category[0] : (x.category || 'notice');
-          return catStr === cat;
-      }).length;
+      const n = NEWS.filter(x => (x.category || 'notice') === cat).length;
       document.querySelector(`[data-count="${cat}"]`).textContent = n;
     });
   }
 
-  // ============ microCMS からデータを取得 ============
-  async function fetchNews() {
-    // ★ サービスドメインとAPIキーを反映済みです ★
-    const MICROCMS_DOMAIN = 'hugmeid'; 
-    const API_KEY = '8uwainxJqQScCDcIlbtsMi8vMhtCZdTaPMEL';
-
-    try {
-      const res = await fetch(`https://${MICROCMS_DOMAIN}.microcms.io/api/v1/news?limit=100`, {
-        headers: { 'X-MICROCMS-API-KEY': API_KEY }
-      });
-      
-      if (!res.ok) throw new Error('APIリクエストに失敗しました');
-      
-      const data = await res.json();
-      NEWS = data.contents; 
-      
+  // ============ 記事データを取得（microCMS → 管理画面 → 初期データ） ============
+  function fetchNews() {
+    window.HugmadeNewsLoader.load(function (items) {
+      NEWS = items;
       updateCounts();
       render();
-    } catch (err) {
-      console.error('ニュースの取得に失敗しました', err);
-      listEl.innerHTML = '';
-      emptyEl.textContent = 'お知らせを読み込めませんでした。時間をおいて再読み込みしてください。';
-      emptyEl.classList.add('visible');
-    }
+    });
   }
 
   // ============ イベントリスナー ============
